@@ -30,37 +30,6 @@ tiny-yolo를 써보았지만 그마저도 fps가 너무 낮았다.
 
 [https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md)
 
-### 파이썬 관련 라이브러리 설치
-
-    $ sudo apt-get install protobuf-compiler python-pil python-lxml python-tk
-    (py3) $ pip install jupyter
-    (py3) $ pip install matplotlib
-    (py3) $ pip install Pillow
-
-(py3 붙어 있는 것은 python3에 설치할 사람만)
-
-### Github에서 텐서플로 모델 복사
-
-    $ mkdir -p ~/work/tensorflow
-    $ cd ~/work/tensorflow
-    $ git clone https://github.com/tensorflow/models
-
-~/work/tensorflow 디렉토리에 복사한다.
-
-### cocoapi 설치 ( 선택 )
-
-이건 해도 되고 안해도 된다.
-
-    (py3) $ pip install cython
-    $ git clone https://github.com/cocodataset/cocoapi.git
-    $ cd cocoapi/PythonAPI
-    $ make
-    $ cp -r pycocotools ~/work/tensorflow/models/research/
-
-### Protobuf 설치
-
-    $ cd ~/work/tensorflow/models/research
-    $ protoc object_detection/protos/*.proto --python_out=.
     
 
 위에 꺼 다 무시하고 이거부터 시작해도 될 거 같다...
