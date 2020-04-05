@@ -1,0 +1,21 @@
+html,body {
+    margin:0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height:100%;
+    text-align: center;
+} 
+.mainblock{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    font-size:2.5em;
+    width: 85%;
+    height:10%;
+    background:rgba(165, 123, 243, 0.2);
+    text-align: center;
+    vertical-align: bottom;
+}
