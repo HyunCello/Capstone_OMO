@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <link rel="stylesheet" type="text/css" href="style.css"> 
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
+</head>
+<body>
+<div id="map" style="width:100%;height:460px;"></div>
+
+<div class="mainblock" id="gotomain">
+  
+    메인으로 가기
+
+</div>
+
+
+<script type="text/javascript">
+window.onload = function() {
+    document.getElementById("gotomain").onclick = function(){
+        location.href="index.html";
+    }
+}
+</script>
+
+<script>
+
+var map = new naver.maps.Map('map', {
+    mapTypeId: naver.maps.MapTypeId.HYBRID,
+    center: new naver.maps.LatLng(37.29720, 126.836625),
+    zoom: 18
+});
+var marker = new naver.maps.Marker({ // 1공3공 사이
+    position: new naver.maps.LatLng(37.297567, 126.836710),
+    map: map
+});
+/*
+var marker = new naver.maps.Marker({ // 1공 교차로내부
+    position: new naver.maps.LatLng(37.297430, 126.836800),
+    map: map
+});
+var marker = new naver.maps.Marker({ // 1공 쪽문
+    position: new naver.maps.LatLng(37.2972863,126.8368992),
+    map: map
+});
+var marker = new naver.maps.Marker({ // 1공 쪽문조금옆
+    position: new naver.maps.LatLng(37.2972580,126.8368434),
+    map: map
+});
+var marker = new naver.maps.Marker({ // 1공 교차로 -> 4공 앞
+    position: new naver.maps.LatLng(37.297315, 126.836530),
+    map: map
+});*/
+var marker = new naver.maps.Marker({ // 4공 앞(내부)
+    position: new naver.maps.LatLng(37.297200, 126.836260),
+    map: map
+});
+var marker = new naver.maps.Marker({ // 5공뒷편
+    position: new naver.maps.LatLng(37.2968655,126.8368147),
+    map: map
+});/*
+var marker = new naver.maps.Marker({ // 5공 1공사이
+    position: new naver.maps.LatLng(37.2969604,126.8370333),
+    map: map
+});
+var marker = new naver.maps.Marker({ // 4공 5공 사이
+    position: new naver.maps.LatLng(37.2967604,126.8365639),
+    map: map
+});
+var marker = new naver.maps.Marker({ // 하수도
+    position: new naver.maps.LatLng(37.29708, 126.836670),
+    map: map 
+});*/
+37.297567, 126.836710
+37.2967604,126.8365639
+
+
+var polyline1 = new naver.maps.Polyline({
+    map: map,
+    path: [
+        new naver.maps.LatLng(37.297567, 126.836710), //1공3공사이
+        new naver.maps.LatLng(37.297430, 126.836800), //1공멕방쪽과1공사이
+        new naver.maps.LatLng(37.2972863,126.8368992), //1공멕방쪽
+        new naver.maps.LatLng(37.2972560,126.8368274), //1공멕반쪽 조금왼쪽
+        new naver.maps.LatLng(37.2969604,126.8370333), // 5공뒷편
+        new naver.maps.LatLng(37.2968655,126.8368147), // 5공뒷편과 4공아래사이
+        new naver.maps.LatLng(37.2967624,126.8365529), // 4공아래
+        new naver.maps.LatLng(37.297200, 126.836260), // 4공뒷편
+        new naver.maps.LatLng(37.297315, 126.836530), // 3공4공사이
+        new naver.maps.LatLng(37.29709, 126.836675), // 하수도관리
+        new naver.maps.LatLng(37.296875,126.8368147), // 
+    ]
+});
+var polyline2 = new naver.maps.Polyline({
+    map: map,
+    path: [
+        new naver.maps.LatLng(37.297567, 126.836710),
+        new naver.maps.LatLng(37.297430, 126.836800),
+        new naver.maps.LatLng(37.297200, 126.836260),
+        new naver.maps.LatLng(37.297315, 126.836530),
+        
+    ],
+    strokeColor: '#5347AA',
+});
+
+
+</script>
+</body>
+</html>
