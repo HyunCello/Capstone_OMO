@@ -12,9 +12,5 @@ $(document).ready(function () {
     $("#gotopassword").on("click", function () {
         location.href="password.html" 
     });
-    $("#gotoorder").on("click", function () {
-        location.href="order.html" 
-    });
+}); 
 
-
-  }); 
