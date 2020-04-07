@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>간단한 지도 표시하기</title>
     <link rel="stylesheet" type="text/css" href="style.css"> 
+    <script src="jquery-3.4.1.min.js"></script>
+    
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
 </head>
 <body>
@@ -17,14 +19,6 @@
 
 </div>
 
-
-<script type="text/javascript">
-window.onload = function() {
-    document.getElementById("gotomain").onclick = function(){
-        location.href="index.html";
-    }
-}
-</script>
 
 <script>
 
@@ -108,5 +102,7 @@ var polyline2 = new naver.maps.Polyline({
 
 
 </script>
+
 </body>
+<script type="text/javascript" src="function.js"></script>
 </html>
