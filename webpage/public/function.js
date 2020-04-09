@@ -12,5 +12,8 @@ $(document).ready(function () {
     $("#gotopassword").on("click", function () {
         location.href="password.html" 
     });
+    $("#gotomaker").on("click", function () {
+        location.href="maker.html" 
+    });
 }); 
 

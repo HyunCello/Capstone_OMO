@@ -9,8 +9,16 @@
     <script src="jquery-3.4.1.min.js"></script>
     
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
+
 </head>
 <body>
+    <style>
+        .btn_mylct{z-index:100;overflow:hidden;display:inline-block;position:absolute;top:7px;left:5px;width:34px;height:34px;border:1px solid rgba(58,70,88,.45);border-radius:2px;background:#fcfcfd;text-align:center;-webkit-background-clip:padding;background-clip:padding-box}
+    
+        .spr_trff{overflow:hidden;display:inline-block;color:transparent!important;vertical-align:top;background:url(https://ssl.pstatic.net/static/maps/m/spr_trff_v6.png) 0 0;background-size:200px 200px;-webkit-background-size:200px 200px}
+        .spr_ico_mylct{width:20px;height:20px;margin:7px 0 0 0;background-position:-153px -31px}
+    </style>
+    
 <div id="map" style="width:100%;height:460px;"></div>
 
 <div class="mainblock" id="gotomain">
@@ -19,14 +27,14 @@
 
 </div>
 
-
 <script>
 
 var map = new naver.maps.Map('map', {
     mapTypeId: naver.maps.MapTypeId.HYBRID,
-    center: new naver.maps.LatLng(37.29720, 126.836625),
+    center: new naver.maps.LatLng(37.29709, 126.836675),
     zoom: 18
 });
+
 var marker = new naver.maps.Marker({ // 1공3공 사이
     position: new naver.maps.LatLng(37.297567, 126.836710),
     map: map
@@ -68,9 +76,6 @@ var marker = new naver.maps.Marker({ // 하수도
     position: new naver.maps.LatLng(37.29708, 126.836670),
     map: map 
 });*/
-37.297567, 126.836710
-37.2967604,126.8365639
-
 
 var polyline1 = new naver.maps.Polyline({
     map: map,
@@ -100,7 +105,24 @@ var polyline2 = new naver.maps.Polyline({
     strokeColor: '#5347AA',
 });
 
+var locationBtnHtml = '<a href="#" class="btn_mylct"><span class="spr_trff spr_ico_mylct">NAVER</span></a>';
 
+
+naver.maps.Event.once(map, 'init_stylemap', function() {
+
+    var customControl = new naver.maps.CustomControl(locationBtnHtml, {
+        position: naver.maps.Position.TOP_LEFT
+    });
+
+    customControl.setMap(map);
+
+    naver.maps.Event.addDOMListener(customControl.getElement(), 'click', function() {
+        map.setCenter(new naver.maps.LatLng(37.29709, 126.836675));
+        map.setMap(18);
+    });
+
+
+});
 </script>
 
 </body>
