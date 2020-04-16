@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="map_file" default="$(find omoros)/navigation/maps/map.yaml"/>
+  <arg name="move_forward_only" default="false"/>
+
+  <!-- Launch omoros -->
+  <include file="$(find omoros)/launch/drive_r1.launch" /> 
+
+  <!-- Launch ydlidar -->    
+  <include file="$(find ydlidar_ros)/launch/G6.launch" />   
+
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
+        args="0.0 0.0 0.2 0.0 0.0 0.0 /base_link /laser_frame 40" /> -->
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  
+  <!-- AMCL -->
+  <include file="$(find omoros)/launch/amcl.launch"/>
+
+  <!-- move_base -->
+  <include file="$(find omoros)/launch/move_base.launch">
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+  
+   <!-- rviz -->
+   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find omoros)/navigation/rviz/omoros_navigation.rviz" />
+   <!--<include file="$(find hector_geotiff)/launch/geotiff_mapper.launch" />-->
+</launch>

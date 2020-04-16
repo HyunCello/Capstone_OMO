@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<launch>
+   <arg name="multi_robot_name" default="robot"/>
+   <arg name="set_run_rviz" default="0"/>
+   <arg name="set_port" default="/dev/ttyMotor"/>
+   <arg name="set_joy_en" default="0"/>
+
+   <!-- Launch R-1 default -->
+      <!-- node respawn="true" pkg="joy" type="joy_node" name="teleop_joy"/-->
+      <include file="$(find omoros)/launch/includes/r1_description.launch.xml" />
+      <node pkg="omoros" type="driver_r1.py" name="omoros" output="screen">
+         <param name="port" value="$(arg set_port)"/>
+         <param name="baud" value="115200"/> 
+         <param name="modelName" value="r1"/> 
+         <param name="joy_enable" value="$(arg set_joy_en)"/>
+      </node>
+
+      <!--<param name="robot_description" command="$(find xacro)/xacro.py $(find omoros)/r1_description/urdf/r1.urdf.xacro"/>-->
+      <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+         <param name="publish_frequency" type="double" value="10.0" />
+      </node>
+      <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+      <!--<node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_left_link" 
+            args="0.0  0.29 0.11 0.0 0.0 0.0 /base_link /wheel_left_link 40" />
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_right_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /wheel_right_link 40" />-->
+
+      <!--
+      <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
+            args="0.0 0.0 0.0 0 0 0.0 /map /odom 40" />
+
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_left_link" 
+            args="0.0  0.29 0.11 0.0 0.0 0.0 /base_link /wheel_left_link 40" />
+
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_right_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /wheel_right_link 40" />
+      <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+         <param name="publish_frequency" type="double" value="50.0" />
+         <param name="tf_prefix" value="$(arg multi_robot_name)"/>
+      </node>-->
+
+      <group if="$(eval arg('set_run_rviz')==1)">
+         <node pkg="rviz" type="rviz" name="rviz" args="-d $(find omoros)/r1_description/rviz/model.rviz"/>
+      </group>
+      <!--
+      <node pkg="tf" type="static_transform_publisher" name="odom_to_basefootprint" 
+         args="0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_footprint 40" />-->
+      <!--<node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" 
+         args="0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_link 10" />-->
+  
+</launch>

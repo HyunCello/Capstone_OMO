@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find omoros)/r1_description/urdf/r1.urdf.xacro' meshDirectory:=$(find omoros)/r1_description/meshes/" />
+  
+    <param name="robot_description" command="$(arg urdf_file)" />
+    <param name="use_gui" value="true" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_left_link" 
+            args="0.0  0.29 0.11 0.0 0.0 0.0 /base_link /wheel_left_link 40" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_right_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /wheel_right_link 40" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omoros)/r1_description/rviz/visual.rviz" />
+</launch>
