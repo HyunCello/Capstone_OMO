@@ -3,6 +3,7 @@
     src:url(NotoSansCJKkr-Regular.otf);
 }
 html,body {
+    background-color: rgb(255, 255, 255);
     margin:0;
     margin-left: auto;
     margin-right: auto;
@@ -40,4 +41,16 @@ html,body {
     height:7%;
     background:rgba(117, 177, 216, 0.2);
     text-align: center;
+}
+.verticalblock{
+    padding-top:5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    font-size:1.4em;
+    width: 40%;
+    height:40%;
+    background:rgba(117, 177, 216, 0.2);
+    text-align: center;
+    display: inline-block;
 }
