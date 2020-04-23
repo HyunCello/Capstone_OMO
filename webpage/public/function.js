@@ -15,6 +15,9 @@ $(document).ready(function () {
     $("#gotoorder").on("click", function () {
         location.href="order.html" 
     });
+    $("#gotoorderlist").on("click", function () {
+        location.href="orderlist.html" 
+    });
     $("#gotomap").on("click", function () {
         location.href="map.html" 
     });
