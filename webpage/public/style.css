@@ -15,7 +15,8 @@ html,body {
 } 
 
 .mainblock{
-    padding-top:3px;
+    padding-top:3%;
+    padding-bottom: 3%;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: auto;
@@ -26,7 +27,8 @@ html,body {
     height:10%;
     background:rgba(165, 123, 243, 0.2);
     text-align: center;
-    vertical-align: bottom;
+    vertical-align: middle;
+    display: inline-table;
 }
 
 .subblock{

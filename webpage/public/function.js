@@ -27,5 +27,8 @@ $(document).ready(function () {
     $("#gotomaker").on("click", function () {
         location.href="maker.html" 
     });
+    $("#goback").on("click", function(){
+        history.go(-1)
+    });
 }); 
 
