@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>간단한 지도 표시하기</title>
+    <title>배달 가능 구역</title>
     <link rel="stylesheet" type="text/css" href="style.css"> 
     <script src="jquery-3.4.1.min.js"></script>
     
@@ -35,10 +35,22 @@ var map = new naver.maps.Map('map', {
     zoom: 19
 });
 
-var marker = new naver.maps.Marker({ // 1공3공 사이
+var marker1 = new naver.maps.Marker({ // 1공3공 사이
     position: new naver.maps.LatLng(37.297567, 126.836710),
     map: map
 });
+var circle1 = new naver.maps.Circle({
+        strokeColor: '#0000ff',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#0000ff',
+        fillOpacity: 0.35,
+        center: new naver.maps.LatLng(37.297567, 126.836710),
+        radius: 5,
+        zIndex: 100,
+        clickable: true,
+        map: map
+    });
 /*
 var marker = new naver.maps.Marker({ // 1공 교차로내부
     position: new naver.maps.LatLng(37.297430, 126.836800),
@@ -56,14 +68,39 @@ var marker = new naver.maps.Marker({ // 1공 교차로 -> 4공 앞
     position: new naver.maps.LatLng(37.297315, 126.836530),
     map: map
 });*/
-var marker = new naver.maps.Marker({ // 4공 앞(내부)
+var marker2 = new naver.maps.Marker({ // 4공 앞(내부)
     position: new naver.maps.LatLng(37.297200, 126.836260),
     map: map
 });
-var marker = new naver.maps.Marker({ // 5공뒷편
+var circle2 = new naver.maps.Circle({
+        strokeColor: '#0000ff',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#0000ff',
+        fillOpacity: 0.35,
+        center: new naver.maps.LatLng(37.297200, 126.836260),
+        radius: 5,
+        zIndex: 100,
+        clickable: true,
+        map: map
+    });
+var marker3 = new naver.maps.Marker({ // 5공뒷편
     position: new naver.maps.LatLng(37.2968655,126.8368147),
     map: map
-});/*
+});
+var circle3 = new naver.maps.Circle({
+        strokeColor: '#0000ff',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#0000ff',
+        fillOpacity: 0.35,
+        center: new naver.maps.LatLng(37.2968655,126.8368147),
+        radius: 5,
+        zIndex: 100,
+        clickable: true,
+        map: map
+    });
+/*
 var marker = new naver.maps.Marker({ // 5공 1공사이
     position: new naver.maps.LatLng(37.2969604,126.8370333),
     map: map
@@ -71,11 +108,20 @@ var marker = new naver.maps.Marker({ // 5공 1공사이
 var marker = new naver.maps.Marker({ // 4공 5공 사이
     position: new naver.maps.LatLng(37.2967604,126.8365639),
     map: map
-});
-var marker = new naver.maps.Marker({ // 하수도
-    position: new naver.maps.LatLng(37.29708, 126.836670),
-    map: map 
 });*/
+var position1 = new naver.maps.LatLng(37.29708, 126.836670);
+var homemarker = { // 하수도
+    position: position1,
+    map: map,
+    icon: {
+        url: 'https://i.imgur.com/EVrmTiq.png',
+        size: new naver.maps.Size(20, 22),
+        origin: new naver.maps.Point(0, 0),
+        anchor: new naver.maps.Point(25, 26)
+    }
+
+}; 
+var marker = new naver.maps.Marker(homemarker);
 
 var polyline1 = new naver.maps.Polyline({
     map: map,
@@ -118,11 +164,56 @@ naver.maps.Event.once(map, 'init_stylemap', function() {
 
     naver.maps.Event.addDOMListener(customControl.getElement(), 'click', function() {
         map.setCenter(new naver.maps.LatLng(37.29709, 126.836675));
-        map.setZoom(18);
+        map.setZoom(19);
     });
 
 
 });
+
+
+////////////////////////포인터 설정////////////////////////////////////
+
+
+naver.maps.Event.addListener(circle1, "mouseover", function(e) {
+    map.setCursor("pointer");
+        circle1.setOptions({
+            fillOpacity: 0.8
+        });
+});
+naver.maps.Event.addListener(circle1, "mouseout", function(e) {
+    map.setCursor("auto");
+
+    circle1.setOptions({
+        fillOpacity: 0.35
+        });
+});
+naver.maps.Event.addListener(circle2, "mouseover", function(e) {
+    map.setCursor("pointer");
+        circle2.setOptions({
+            fillOpacity: 0.8
+        });
+});
+naver.maps.Event.addListener(circle2, "mouseout", function(e) {
+    map.setCursor("auto");
+
+    circle2.setOptions({
+        fillOpacity: 0.35
+        });
+});
+naver.maps.Event.addListener(circle3, "mouseover", function(e) {
+    map.setCursor("pointer");
+        circle3.setOptions({
+            fillOpacity: 0.8
+        });
+});
+naver.maps.Event.addListener(circle3, "mouseout", function(e) {
+    map.setCursor("auto");
+
+    circle3.setOptions({
+        fillOpacity: 0.35
+        });
+});
+/////////////////////////////////////////////////////////////
 </script>
 
 </body>
