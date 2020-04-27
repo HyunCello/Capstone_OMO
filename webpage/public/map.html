@@ -109,17 +109,13 @@ var marker = new naver.maps.Marker({ // 4공 5공 사이
     position: new naver.maps.LatLng(37.2967604,126.8365639),
     map: map
 });*/
-var position1 = new naver.maps.LatLng(37.29708, 126.836670);
+var position1 = new naver.maps.LatLng(37.29705, 126.836670);
 var homemarker = { // 하수도
     position: position1,
     map: map,
     icon: {
-        url: 'https://i.imgur.com/EVrmTiq.png',
-        size: new naver.maps.Size(20, 22),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(25, 26)
+        url: './img/home.png',
     }
-
 }; 
 var marker = new naver.maps.Marker(homemarker);
 

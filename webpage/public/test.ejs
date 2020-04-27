@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+  <head>
+  <meta charset="UTF-8">
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+  </head>
+  <h1>Firebase Test</h1>
+  <p>Firebase console에 데이터가 추가 되었는지 확인하세요</p>
+  <script>
+    // Initialize Firebase
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDo3ePhiSi8uHkQHAUPlSU-Em2APipaXUE",
+    authDomain: "omo-mobile.firebaseapp.com",
+    databaseURL: "https://omo-mobile.firebaseio.com",
+    projectId: "omo-mobile",
+    storageBucket: "omo-mobile.appspot.com",
+    messagingSenderId: "126047002730",
+    appId: "1:126047002730:web:ebb27bd8a261f831856a13",
+    measurementId: "G-ZECGZQ6K3H"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+    
+    var newPostKey = firebase.database().ref().child('posts').push().key;
+   
+    var postData = {
+      brdno: newPostKey,
+      brdwriter:"홍길동",
+      brdtitle:"게시판 제목",
+      brdmemo:"게시물 내용",
+      brddate: Date.now()
+    };
+   
+    var updates = {};
+    updates['/board/' + newPostKey] = postData;
+   
+    firebase.database().ref().update(updates);
+            
+  </script>
+
+
+출처: https://forest71.tistory.com/165 [SW 개발이 좋은 사람]
