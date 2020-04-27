@@ -23,18 +23,18 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
     
-    var newPostKey = firebase.database().ref().child('posts').push().key;
+    var newOrderKey = firebase.database().ref().child('orders').push().key;
    
-    var postData = {
-      brdno: newPostKey,
+    var orderData = {
+      brdno: newOrderKey,
       brdwriter:"홍길동",
-      brdtitle:"게시판 제목",
-      brdmemo:"게시물 내용",
+      brdmenu:"주문 종류",
+      brdnumber:"메뉴 개수",
       brddate: Date.now()
     };
    
     var updates = {};
-    updates['/board/' + newPostKey] = postData;
+    updates['/orders/' + newOrderKey] = orderData;
    
     firebase.database().ref().update(updates);
             
