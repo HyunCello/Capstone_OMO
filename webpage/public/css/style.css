@@ -1,6 +1,6 @@
 @font-face{
     font-family :'NotoSans';
-    src:url(NotoSansCJKkr-Regular.otf);
+    src:url(../fonts/NotoSansCJKkr-Regular.otf);
 }
 html,body {
     background-color: rgb(255, 255, 255);

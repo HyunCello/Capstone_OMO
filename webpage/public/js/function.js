@@ -1,17 +1,14 @@
 
 $(document).ready(function () { 
     $("#gotoindex").on("click", function () {
-        location.href="index.html" 
+        location.href="../index.html" 
     });
     $("#gotoorderer").on("click", function () {
-        location.href="orderer.html" 
+        location.href="html/orderer.html" 
     });
     $("#gotoseller").on("click", function () {
-        location.href="seller.html" 
+        location.href="html/seller.html" 
     });
-    $("#gotomain").on("click", function () { 
-        location.href="index.html" 
-    }); 
     $("#gotoorder").on("click", function () {
         location.href="order.html" 
     });
@@ -34,7 +31,7 @@ $(document).ready(function () {
 
 
     $("#gototest").on("click", function(){
-        location.href="test.html" 
+        location.href="html/test.html" 
     });
 })
 //////////////////////////////////////////////////////
