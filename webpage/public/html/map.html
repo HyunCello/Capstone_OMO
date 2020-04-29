@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>배달 가능 구역</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript"
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
+
+</head>
+
+<body>
+    <style>
+        .btn_mylct {
+            z-index: 100;
+            overflow: hidden;
+            display: inline-block;
+            position: absolute;
+            top: 7px;
+            left: 5px;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(58, 70, 88, .45);
+            border-radius: 2px;
+            background: #fcfcfd;
+            text-align: center;
+            -webkit-background-clip: padding;
+            background-clip: padding-box
+        }
+
+        .spr_trff {
+            overflow: hidden;
+            display: inline-block;
+            color: transparent !important;
+            vertical-align: top;
+            background: url(https://ssl.pstatic.net/static/maps/m/spr_trff_v6.png) 0 0;
+            background-size: 200px 200px;
+            -webkit-background-size: 200px 200px
+        }
+
+        .spr_ico_mylct {
+            width: 20px;
+            height: 20px;
+            margin: 7px 0 0 0;
+            background-position: -153px -31px
+        }
+    </style>
+
+    <div id="map" style="width:100%;height:700px;"></div>
+
+    <div class="mainblock" id="goback">
+
+        뒤로 가기
+
+    </div>
+
+    <script>
+
+        var map = new naver.maps.Map('map', {
+            mapTypeId: naver.maps.MapTypeId.HYBRID,
+            center: new naver.maps.LatLng(37.29709, 126.836675),
+            zoom: 19
+        });
+
+        var marker1 = new naver.maps.Marker({ // 1공3공 사이
+            position: new naver.maps.LatLng(37.297567, 126.836710),
+            map: map
+        });
+        var circle1 = new naver.maps.Circle({
+            strokeColor: '#0000ff',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#0000ff',
+            fillOpacity: 0.35,
+            center: new naver.maps.LatLng(37.297567, 126.836710),
+            radius: 5,
+            zIndex: 100,
+            clickable: true,
+            map: map
+        });
+        /*
+        var marker = new naver.maps.Marker({ // 1공 교차로내부
+            position: new naver.maps.LatLng(37.297430, 126.836800),
+            map: map
+        });
+        var marker = new naver.maps.Marker({ // 1공 쪽문
+            position: new naver.maps.LatLng(37.2972863,126.8368992),
+            map: map
+        });
+        var marker = new naver.maps.Marker({ // 1공 쪽문조금옆
+            position: new naver.maps.LatLng(37.2972580,126.8368434),
+            map: map
+        });
+        var marker = new naver.maps.Marker({ // 1공 교차로 -> 4공 앞
+            position: new naver.maps.LatLng(37.297315, 126.836530),
+            map: map
+        });*/
+        var marker2 = new naver.maps.Marker({ // 4공 앞(내부)
+            position: new naver.maps.LatLng(37.297200, 126.836260),
+            map: map
+        });
+        var circle2 = new naver.maps.Circle({
+            strokeColor: '#0000ff',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#0000ff',
+            fillOpacity: 0.35,
+            center: new naver.maps.LatLng(37.297200, 126.836260),
+            radius: 5,
+            zIndex: 100,
+            clickable: true,
+            map: map
+        });
+        var marker3 = new naver.maps.Marker({ // 5공뒷편
+            position: new naver.maps.LatLng(37.2968655, 126.8368147),
+            map: map
+        });
+        var circle3 = new naver.maps.Circle({
+            strokeColor: '#0000ff',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#0000ff',
+            fillOpacity: 0.35,
+            center: new naver.maps.LatLng(37.2968655, 126.8368147),
+            radius: 5,
+            zIndex: 100,
+            clickable: true,
+            map: map
+        });
+        /*
+        var marker = new naver.maps.Marker({ // 5공 1공사이
+            position: new naver.maps.LatLng(37.2969604,126.8370333),
+            map: map
+        });
+        var marker = new naver.maps.Marker({ // 4공 5공 사이
+            position: new naver.maps.LatLng(37.2967604,126.8365639),
+            map: map
+        });*/
+        var position1 = new naver.maps.LatLng(37.29705, 126.836670);
+        var homemarker = { // 하수도
+            position: position1,
+            map: map,
+            icon: {
+                url: './images/home.png',
+            }
+        };
+        var marker = new naver.maps.Marker(homemarker);
+
+        var polyline1 = new naver.maps.Polyline({
+            map: map,
+            path: [
+                new naver.maps.LatLng(37.297567, 126.836710), //1공3공사이
+                new naver.maps.LatLng(37.297430, 126.836800), //1공멕방쪽과1공사이
+                new naver.maps.LatLng(37.2972863, 126.8368992), //1공멕방쪽
+                new naver.maps.LatLng(37.2972560, 126.8368274), //1공멕반쪽 조금왼쪽
+                new naver.maps.LatLng(37.2969604, 126.8370333), // 5공뒷편
+                new naver.maps.LatLng(37.2968655, 126.8368147), // 5공뒷편과 4공아래사이
+                new naver.maps.LatLng(37.2967624, 126.8365529), // 4공아래
+                new naver.maps.LatLng(37.297200, 126.836260), // 4공뒷편
+                new naver.maps.LatLng(37.297315, 126.836530), // 3공4공사이
+                new naver.maps.LatLng(37.29709, 126.836675), // 하수도관리
+                new naver.maps.LatLng(37.296875, 126.8368147), // 
+            ]
+        });
+        var polyline2 = new naver.maps.Polyline({
+            map: map,
+            path: [
+                new naver.maps.LatLng(37.297567, 126.836710),
+                new naver.maps.LatLng(37.297430, 126.836800),
+                new naver.maps.LatLng(37.297200, 126.836260),
+                new naver.maps.LatLng(37.297315, 126.836530),
+
+            ],
+            strokeColor: '#5347AA',
+        });
+
+        var locationBtnHtml = '<a href="#" class="btn_mylct"><span class="spr_trff spr_ico_mylct">NAVER</span></a>';
+
+
+        naver.maps.Event.once(map, 'init_stylemap', function () {
+
+            var customControl = new naver.maps.CustomControl(locationBtnHtml, {
+                position: naver.maps.Position.TOP_LEFT
+            });
+
+            customControl.setMap(map);
+
+            naver.maps.Event.addDOMListener(customControl.getElement(), 'click', function () {
+                map.setCenter(new naver.maps.LatLng(37.29709, 126.836675));
+                map.setZoom(19);
+            });
+
+
+        });
+
+
+        ////////////////////////포인터 설정////////////////////////////////////
+
+
+        naver.maps.Event.addListener(circle1, "mouseover", function (e) {
+            map.setCursor("pointer");
+            circle1.setOptions({
+                fillOpacity: 0.8
+            });
+        });
+        naver.maps.Event.addListener(circle1, "mouseout", function (e) {
+            map.setCursor("auto");
+
+            circle1.setOptions({
+                fillOpacity: 0.35
+            });
+        });
+        naver.maps.Event.addListener(circle2, "mouseover", function (e) {
+            map.setCursor("pointer");
+            circle2.setOptions({
+                fillOpacity: 0.8
+            });
+        });
+        naver.maps.Event.addListener(circle2, "mouseout", function (e) {
+            map.setCursor("auto");
+
+            circle2.setOptions({
+                fillOpacity: 0.35
+            });
+        });
+        naver.maps.Event.addListener(circle3, "mouseover", function (e) {
+            map.setCursor("pointer");
+            circle3.setOptions({
+                fillOpacity: 0.8
+            });
+        });
+        naver.maps.Event.addListener(circle3, "mouseout", function (e) {
+            map.setCursor("auto");
+
+            circle3.setOptions({
+                fillOpacity: 0.35
+            });
+        });
+/////////////////////////////////////////////////////////////
+    </script>
+
+</body>
+<script type="text/javascript" src="../js/function.js"></script>
+
+</html>
