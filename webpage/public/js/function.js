@@ -27,9 +27,6 @@ $(document).ready(function () {
     $("#goback").on("click", function(){
         history.go(-1)
     });
-
-
-
     $("#gototest").on("click", function(){
         location.href="html/test.html" 
     });
