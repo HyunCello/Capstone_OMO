@@ -208,7 +208,7 @@
 // Select your hardware here by uncommenting one line!
 //#define HW__VERSION_CODE 10125 // SparkFun "9DOF Razor IMU" version "SEN-10125" (HMC5843 magnetometer)
 //#define HW__VERSION_CODE 10736 // SparkFun "9DOF Razor IMU" version "SEN-10736" (HMC5883L magnetometer)
-//#define HW__VERSION_CODE 14001 // SparkFun "9DoF Razor IMU M0" version "SEN-14001"
+#define HW__VERSION_CODE 14001 // SparkFun "9DoF Razor IMU M0" version "SEN-14001"
 //#define HW__VERSION_CODE 10183 // SparkFun "9DOF Sensor Stick" version "SEN-10183" (HMC5843 magnetometer)
 //#define HW__VERSION_CODE 10321 // SparkFun "9DOF Sensor Stick" version "SEN-10321" (HMC5843 magnetometer)
 //#define HW__VERSION_CODE 10724 // SparkFun "9DOF Sensor Stick" version "SEN-10724" (HMC5883L magnetometer)
@@ -243,7 +243,7 @@
 #define OUTPUT__FORMAT_BINARY 1 // Outputs data as binary float
 
 // Select your startup output mode and format here!
-int output_mode = OUTPUT__MODE_ANGLES;
+int output_mode = OUTPUT__MODE_ANGLES_AG_SENSORS;
 int output_format = OUTPUT__FORMAT_TEXT;
 
 // Select if serial continuous streaming output is enabled per default on startup.
@@ -708,6 +708,11 @@ void loop()
           curr_calibration_sensor = (curr_calibration_sensor + 1) % 3;
           reset_calibration_session_flag = true;
         }
+        else if (output_param == 'x') // Output angles + accel + rot. vel as te_x_t
+        {
+          output_mode = OUTPUT__MODE_ANGLES_AG_SENSORS;
+          output_format = OUTPUT__FORMAT_TEXT;
+        }
         else if (output_param == 't') // Output angles as _t_ext
         {
           output_mode = OUTPUT__MODE_ANGLES;
@@ -723,11 +728,7 @@ void loop()
           output_mode = OUTPUT__MODE_CALIBRATE_SENSORS;
           reset_calibration_session_flag = true;
         }
-        else if (output_param == 'x') // Output angles + accel + rot. vel as te_x_t
-        {
-          output_mode = OUTPUT__MODE_ANGLES_AG_SENSORS;
-          output_format = OUTPUT__FORMAT_TEXT;
-        }
+        
         else if (output_param == 's') // Output _s_ensor values
         {
           char values_param = readChar();
