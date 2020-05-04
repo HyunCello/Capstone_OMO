@@ -51,7 +51,7 @@
         }
     </style>
 
-    <div id="map" style="width:100%;height:700px;"></div>
+    <div id="map" style="width:100%;height:750px;"></div>
 
     <div class="mainblock" id="goback">
 
@@ -63,7 +63,7 @@
 
         var map = new naver.maps.Map('map', {
             mapTypeId: naver.maps.MapTypeId.HYBRID,
-            center: new naver.maps.LatLng(37.29709, 126.836675),
+            center: new naver.maps.LatLng(37.29729, 126.836795),
             zoom: 19
         });
 
@@ -197,6 +197,41 @@
 
 
         });
+        //////////////////////////////////////////////////////////////////
+
+        var onegongthreegong = [
+            '<div class="iw_inner">',
+            '   <h3>1공과 3공 사이</h3>',
+            '</div>'
+        ].join('');
+
+        var onegong = new naver.maps.InfoWindow({
+            content: onegongthreegong
+        });
+
+        var bythethreegong = [
+            '<div class="iw_inner">',
+            '   <h3>   3공   </h3>',
+            '</div>'
+        ].join('');
+
+        var threegong = new naver.maps.InfoWindow({
+            content: bythethreegong
+        });
+
+        var bythefivegong = [
+            '<div class="iw_inner">',
+            '   <h3>   5공   </h3>',
+            '</div>'
+        ].join('');
+
+        var fivegong = new naver.maps.InfoWindow({
+            content: bythefivegong
+        });
+
+
+
+
 
 
         ////////////////////////포인터 설정////////////////////////////////////
@@ -204,12 +239,17 @@
 
         naver.maps.Event.addListener(circle1, "mouseover", function (e) {
             map.setCursor("pointer");
+            if (onegong.getMap()) {
+            } else {
+                onegong.open(map, marker1);
+            }
             circle1.setOptions({
                 fillOpacity: 0.8
             });
         });
         naver.maps.Event.addListener(circle1, "mouseout", function (e) {
             map.setCursor("auto");
+            onegong.close();
 
             circle1.setOptions({
                 fillOpacity: 0.35
@@ -217,31 +257,40 @@
         });
         naver.maps.Event.addListener(circle2, "mouseover", function (e) {
             map.setCursor("pointer");
+            if (threegong.getMap()) {
+            } else {
+                threegong.open(map, marker2);
+            }
             circle2.setOptions({
                 fillOpacity: 0.8
             });
         });
         naver.maps.Event.addListener(circle2, "mouseout", function (e) {
             map.setCursor("auto");
-
+            threegong.close();
             circle2.setOptions({
                 fillOpacity: 0.35
             });
         });
         naver.maps.Event.addListener(circle3, "mouseover", function (e) {
             map.setCursor("pointer");
+            if (fivegong.getMap()) {
+            } else {
+                fivegong.open(map, marker3);
+            }
             circle3.setOptions({
                 fillOpacity: 0.8
             });
         });
         naver.maps.Event.addListener(circle3, "mouseout", function (e) {
             map.setCursor("auto");
-
+            fivegong.close();
             circle3.setOptions({
                 fillOpacity: 0.35
             });
         });
 /////////////////////////////////////////////////////////////
+
     </script>
 
 </body>
