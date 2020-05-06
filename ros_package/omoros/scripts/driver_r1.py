@@ -482,7 +482,7 @@ class Robot:
       Vth = twist.twist.angular.z
       odom_quat = quaternion_from_euler(0,0,pose.theta)
       self.odom_broadcaster.sendTransform((pose.x,pose.y,0.),odom_quat,now,'base_link','odom')
-      #self.odom_broadcaster.sendTransform((pose.x,pose.y,0.),odom_quat,now,'base_footprint','odom')
+      # self.odom_broadcaster.sendTransform((pose.x,pose.y,0.),odom_quat,now,'base_footprint','odom')
       
       odom = Odometry()
       odom.header.stamp = now

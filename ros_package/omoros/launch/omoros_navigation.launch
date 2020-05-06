@@ -7,8 +7,8 @@
   <!-- Launch omoros -->
   <include file="$(find omoros)/launch/drive_r1.launch" /> 
 
-  <!-- Launch ydlidar -->    
-  <include file="$(find ydlidar_ros)/launch/G6.launch" />   
+  <!-- Launch ydlidar 
+  <include file="$(find ydlidar_ros)/launch/G6.launch" />   -->
 
   <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
         args="0.0 0.0 0.2 0.0 0.0 0.0 /base_link /laser_frame 40" /> -->

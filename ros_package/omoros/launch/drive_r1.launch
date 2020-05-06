@@ -15,16 +15,33 @@
          <param name="modelName" value="r1"/> 
          <param name="joy_enable" value="$(arg set_joy_en)"/>
       </node>
+      <!-- Code by Pinkwink 
+      <node pkg="omoros" type="omo_r1_motor_node.py" name="omoros" output="screen">
+         <param name="port" value="$(arg set_port)"/>
+         <param name="baud" value="115200"/>
+         <param name="modelName" value="r1"/>
+      </node> -->
 
       <!--<param name="robot_description" command="$(find xacro)/xacro.py $(find omoros)/r1_description/urdf/r1.urdf.xacro"/>-->
       <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
          <param name="publish_frequency" type="double" value="10.0" />
       </node>
       <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
-      <!--<node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_left_link" 
-            args="0.0  0.29 0.11 0.0 0.0 0.0 /base_link /wheel_left_link 40" />
+      <!--
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_left_link" 
+            args="0.0  0.29 0.11 0.0 0.0 0.0 /base_link /wheel_left_link 10" />
       <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_right_link" 
-            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /wheel_right_link 40" />-->
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /wheel_right_link 10" />
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_scan" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /base_scan 10" />
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /imu_link 10" />
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_caster_back_left_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /caster_back_left_link 10" />   
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_caster_back_right_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /caster_back_right_link 10" />  
+      <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_link" 
+            args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /gps_link 10" />  -->
 
       <!--
       <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
