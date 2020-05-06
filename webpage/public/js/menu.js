@@ -33,18 +33,20 @@
   var database = firebase.database(); // [데이터베이스] SDK 초기화
 
   ////////읽기 예제////////
+  /*
   var dbTestRef = database.ref('test/')
   dbTestRef.on('child_added', function (data) {
     console.log(data.val())
   })
-
+*/
 
   ////수정 예제/////
+  /*
   var dbTestRef = database.ref('test/')
   dbTestRef.on('child_added', function (data) {
     console.log(data.val(), 'key: ', data.key)
   })
-
+*/
 
   ////////삭제 예제//////////  
   dbTestRef3 = database.ref('test/-L4eNay35sc0db4oigfO').remove()
@@ -74,7 +76,7 @@ function addmenu(menu,number) {
 function readmenu() {
     var dbTestRef = database.ref('test/')
     dbTestRef.on('child_added', function (data) {
-      console.log(data.val())
+      console.log(data.val().name,'key: ', data.key)
     })
 }
 

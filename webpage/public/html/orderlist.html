@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../js/menu.js"></script>
     <script src="../js/jquery-3.4.1.min.js"></script>
     <title>함흥차사-주문하기</title>
 
@@ -20,11 +23,19 @@
 
     </div>
 
-    <div class="subblock">
 
-        치킨
+    <br />
+    <input type="button" value="추가" onclick="add_div()"><br />
+    <div id="room_type">
+
+        <div onclick="remove_div(this)">
+            삭제
+        </div>
 
     </div>
+
+    <div id="field"></div>
+
 
 
     <div class="mainblock" id="goback">
@@ -34,6 +45,44 @@
     </div>
 
 
+    <script type="text/javascript">
+        var names = []
+        var place = []
+        var dbTestRef = database.ref('test/')
+        dbTestRef.on('child_added', function (data) {
+            names.push(data.val().name)
+            place.push(data.val().number)
+            console.log(names)
+            console.log(place)
+        })
+
+
+        function add_div() {
+
+            for (var i = 0; i < names.length; i++) {
+                var div = document.createElement('div');
+                var div2 = document.createElement('div');
+                div.className = "subblock";
+                div.innerHTML = names[i];
+                div2.className = "buttonblock"
+
+                div2.innerHTML = document.getElementById('room_type').innerHTML;
+                document.getElementById('field').appendChild(div);
+                document.getElementById('field').appendChild(div2);
+                console.log("creatediv")
+            }
+        }
+
+
+        function remove_div(obj) {
+            document.getElementById('field').removeChild(obj.parentNode.previousSibling);
+            document.getElementById('field').removeChild(obj.parentNode);
+
+        }
+        setTimeout(function () {
+            add_div()
+        }, 3000)
+    </script>
 
 </body>
 <script type="text/javascript" src="../js/function.js"></script>
