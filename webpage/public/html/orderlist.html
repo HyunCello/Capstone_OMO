@@ -23,7 +23,6 @@
 
     </div>
 
-
     <br />
     <input type="button" value="추가" onclick="add_div()"><br />
     <div id="room_type">
@@ -46,19 +45,24 @@
 
 
     <script type="text/javascript">
+
         var names = []
         var place = []
+
         var dbTestRef = database.ref('test/')
-        dbTestRef.on('child_added', function (data) {
-            names.push(data.val().name)
-            place.push(data.val().number)
-            console.log(names)
-            console.log(place)
-        })
 
+        function initdatabase() {
+            dbTestRef.on('child_added', function (data) {
+                names.push(data.val().name)
+                place.push(data.val().number)
+                console.log(names)
+                console.log(place)
+            })
 
-        function add_div() {
+        }
 
+        function creatediv(initdatabase) {
+            console.log("실행됨")
             for (var i = 0; i < names.length; i++) {
                 var div = document.createElement('div');
                 var div2 = document.createElement('div');
@@ -79,9 +83,7 @@
             document.getElementById('field').removeChild(obj.parentNode);
 
         }
-        setTimeout(function () {
-            add_div()
-        }, 3000)
+        window.onload = initdatabase(), creatediv()
     </script>
 
 </body>
