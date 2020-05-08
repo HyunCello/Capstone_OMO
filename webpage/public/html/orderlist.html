@@ -45,9 +45,9 @@
 
 
     <script type="text/javascript">
-
         var names = []
         var place = []
+
 
         var dbTestRef = database.ref('test/')
 
@@ -55,13 +55,13 @@
             dbTestRef.on('child_added', function (data) {
                 names.push(data.val().name)
                 place.push(data.val().number)
+
                 console.log(names)
                 console.log(place)
             })
-
         }
 
-        function creatediv(initdatabase) {
+        setTimeout(function creatediv() {
             console.log("실행됨")
             for (var i = 0; i < names.length; i++) {
                 var div = document.createElement('div');
@@ -75,15 +75,19 @@
                 document.getElementById('field').appendChild(div2);
                 console.log("creatediv")
             }
+            console.log("ㅠㅠ")
         }
-
+            , 2500
+        )
 
         function remove_div(obj) {
             document.getElementById('field').removeChild(obj.parentNode.previousSibling);
             document.getElementById('field').removeChild(obj.parentNode);
+            deletemenu()
 
         }
-        window.onload = initdatabase(), creatediv()
+
+        window.onload = initdatabase()
     </script>
 
 </body>
