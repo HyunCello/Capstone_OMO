@@ -69,6 +69,7 @@ function addmenu(menu, number) {
   /////////// push = db에 추가 //////////////////
   database.ref("test/").push({ name: menu, number: number });
   /////////// set = 다른거 없애고 그냥 만듬 ///////////////
+  alert(menu + " 주문되었습니다");
 }
 
 function readmenu() {
@@ -100,4 +101,5 @@ function deletemenu() {
   );
   var dbTestRef3 = database.ref("test/" + keys[0]).remove();
   console.log(keys);
+  alert("처리되었습니다");
 }
