@@ -65,9 +65,9 @@ dbTestRef3 = database.ref("test/-L4eNay35sc0db4oigfO").remove();
     firebase.database().ref().update(updates);
       */
 
-function addmenu(menu, number) {
+function addmenu(menu, location) {
   /////////// push = db에 추가 //////////////////
-  database.ref("test/").push({ name: menu, number: number });
+  database.ref("test/").push({ name: menu, location: location });
   /////////// set = 다른거 없애고 그냥 만듬 ///////////////
   alert(menu + " 주문되었습니다");
 }

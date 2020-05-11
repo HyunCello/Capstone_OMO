@@ -23,7 +23,7 @@
 
     </div>
 
-    <div class="subblock" onclick="addmenu('치킨','1')">
+    <div class="subblock" onclick="bb('치킨')">
 
         치킨
 
@@ -43,7 +43,13 @@
 
 
 
+    <script type="text/javascript">
+        function bb(menu) {
+            name = menu
+            location.href = "map.html?" + name + ":"
+        }
 
+    </script>
 </body>
 
 <script type="text/javascript" src="../js/function.js"></script>
