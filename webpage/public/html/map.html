@@ -263,8 +263,9 @@
                 fillOpacity: 0.5
             });
             addmenu(name, "1")
+            location.href = "orderer.html";
         });
-        /*
+
         naver.maps.Event.addListener(circle1, "mouseout", function (e) {
             map.setCursor("auto");
             onegong.close();
@@ -272,7 +273,8 @@
             circle1.setOptions({
                 fillOpacity: 0.35
             });
-        });*/
+        });
+        /////////////////////////////////////
         naver.maps.Event.addListener(circle2, "mouseover", function (e) {
             map.setCursor("pointer");
             if (threegong.getMap()) {
@@ -283,7 +285,18 @@
                 fillOpacity: 0.8
             });
         });
-        /*
+        naver.maps.Event.addListener(circle2, "click", function (e) {
+            map.setCursor("pointer");
+            if (threegong.getMap()) {
+            } else {
+                threegong.open(map, marker1);
+            }
+            circle1.setOptions({
+                fillOpacity: 0.5
+            });
+            addmenu(name, "2")
+            location.href = "orderer.html";
+        });
         naver.maps.Event.addListener(circle2, "mouseout", function (e) {
             map.setCursor("auto");
             threegong.close();
@@ -291,7 +304,7 @@
                 fillOpacity: 0.35
             });
         });
-        */
+        ///////////////////////////////////////////////////
         naver.maps.Event.addListener(circle3, "mouseover", function (e) {
             map.setCursor("pointer");
             if (fivegong.getMap()) {
@@ -302,14 +315,25 @@
                 fillOpacity: 0.8
             });
         });
-        /*
+        naver.maps.Event.addListener(circle3, "click", function (e) {
+            map.setCursor("pointer");
+            if (fivegong.getMap()) {
+            } else {
+                fivegong.open(map, marker1);
+            }
+            circle1.setOptions({
+                fillOpacity: 0.5
+            });
+            addmenu(name, "3")
+            location.href = "orderer.html";
+        });
         naver.maps.Event.addListener(circle3, "mouseout", function (e) {
             map.setCursor("auto");
             fivegong.close();
             circle3.setOptions({
                 fillOpacity: 0.35
             });
-        });*/
+        });
 
 
         /////////////////////////////////////////////////////////////
@@ -318,8 +342,7 @@
         data = temp[1].split(":");
 
         name = data[0];
-        decodeURI(name)
-        console.log(name)
+        name = decodeURI(name)
     </script>
 
 </body>
