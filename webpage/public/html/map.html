@@ -3,12 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>배달 가능 구역</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+    <script src="../js/menu.js"></script>
+
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
 
@@ -200,8 +205,8 @@
         //////////////////////////////////////////////////////////////////
 
         var onegongthreegong = [
-            '<div class="iw_inner">',
-            '   <h3>1공과 3공 사이</h3>',
+            '<div class="iw_inner" >',
+            '   <h3 onclick="addmenu(name,"5")">1공과 3공 사이</h3>',
             '</div>'
         ].join('');
 
@@ -246,7 +251,21 @@
             circle1.setOptions({
                 fillOpacity: 0.8
             });
+
         });
+        naver.maps.Event.addListener(circle1, "click", function (e) {
+            map.setCursor("pointer");
+            if (onegong.getMap()) {
+            } else {
+                onegong.open(map, marker1);
+            }
+            circle1.setOptions({
+                fillOpacity: 0.5
+            });
+            addmenu(name, "1")
+            location.href = "orderer.html";
+        });
+
         naver.maps.Event.addListener(circle1, "mouseout", function (e) {
             map.setCursor("auto");
             onegong.close();
@@ -255,6 +274,7 @@
                 fillOpacity: 0.35
             });
         });
+        /////////////////////////////////////
         naver.maps.Event.addListener(circle2, "mouseover", function (e) {
             map.setCursor("pointer");
             if (threegong.getMap()) {
@@ -265,6 +285,18 @@
                 fillOpacity: 0.8
             });
         });
+        naver.maps.Event.addListener(circle2, "click", function (e) {
+            map.setCursor("pointer");
+            if (threegong.getMap()) {
+            } else {
+                threegong.open(map, marker1);
+            }
+            circle1.setOptions({
+                fillOpacity: 0.5
+            });
+            addmenu(name, "2")
+            location.href = "orderer.html";
+        });
         naver.maps.Event.addListener(circle2, "mouseout", function (e) {
             map.setCursor("auto");
             threegong.close();
@@ -272,6 +304,7 @@
                 fillOpacity: 0.35
             });
         });
+        ///////////////////////////////////////////////////
         naver.maps.Event.addListener(circle3, "mouseover", function (e) {
             map.setCursor("pointer");
             if (fivegong.getMap()) {
@@ -282,6 +315,18 @@
                 fillOpacity: 0.8
             });
         });
+        naver.maps.Event.addListener(circle3, "click", function (e) {
+            map.setCursor("pointer");
+            if (fivegong.getMap()) {
+            } else {
+                fivegong.open(map, marker1);
+            }
+            circle1.setOptions({
+                fillOpacity: 0.5
+            });
+            addmenu(name, "3")
+            location.href = "orderer.html";
+        });
         naver.maps.Event.addListener(circle3, "mouseout", function (e) {
             map.setCursor("auto");
             fivegong.close();
@@ -289,8 +334,15 @@
                 fillOpacity: 0.35
             });
         });
-/////////////////////////////////////////////////////////////
 
+
+        /////////////////////////////////////////////////////////////
+        temp = location.href.split("?");
+
+        data = temp[1].split(":");
+
+        name = data[0];
+        name = decodeURI(name)
     </script>
 
 </body>

@@ -54,7 +54,7 @@
         function initdatabase() {
             dbTestRef.on('child_added', function (data) {
                 names.push(data.val().name)
-                place.push(data.val().number)
+                place.push(data.val().location)
 
                 console.log(names)
                 console.log(place)
@@ -77,7 +77,7 @@
             }
             console.log("ㅠㅠ")
         }
-            , 2500
+            , 3000
         )
 
         function remove_div(obj) {

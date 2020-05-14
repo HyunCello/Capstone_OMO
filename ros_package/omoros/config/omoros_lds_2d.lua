@@ -22,10 +22,10 @@ options = {
   trajectory_builder = TRAJECTORY_BUILDER,
   map_frame = "map",
   tracking_frame = "imu_link", -- imu_link, If you are using gazebo, use 'base_footprint' (libgazebo_ros_imu's bug)
-  published_frame = "odom",
+  published_frame = "base_link",
   odom_frame = "odom",
   provide_odom_frame = false,
-  publish_frame_projected_to_2d = true,
+  publish_frame_projected_to_2d = false,
 
   use_odometry = true,
   use_nav_sat = false,
@@ -45,15 +45,15 @@ options = {
   submap_publish_period_sec = 0.3,
   pose_publish_period_sec = 5e-3,
   trajectory_publish_period_sec = 30e-3,
-  rangefinder_sampling_ratio = 1.0,
+  rangefinder_sampling_ratio = 0.5,
   odometry_sampling_ratio = 0.5,
-  fixed_frame_pose_sampling_ratio = 1.0,
-  imu_sampling_ratio = 1.0,
+  fixed_frame_pose_sampling_ratio = 0.5,
+  imu_sampling_ratio = 0.1,
   landmarks_sampling_ratio = 1.0,
 }
 
 MAP_BUILDER.use_trajectory_builder_2d = true
-
+MAP_BUILDER.num_background_threads = 6
 TRAJECTORY_BUILDER_2D.min_range = 0.1
 TRAJECTORY_BUILDER_2D.max_range = 25.0
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 3.0
@@ -63,16 +63,16 @@ TRAJECTORY_BUILDER_2D.use_imu_data = true
 
 TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.linear_search_window = 0.1
 TRAJECTORY_BUILDER_2D.real_time_correlative_scan_matcher.angular_search_window = math.rad(15.)
--- TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 0.1
--- TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 0.1
--- TRAJECTORY_BUILDER_2D.imu_gravity_time_constant = 1
+TRAJECTORY_BUILDER_2D.ceres_scan_matcher.translation_weight = 0.1
+TRAJECTORY_BUILDER_2D.ceres_scan_matcher.rotation_weight = 0.1
+TRAJECTORY_BUILDER_2D.imu_gravity_time_constant = 1
 
 POSE_GRAPH.constraint_builder.min_score = 0.65
 POSE_GRAPH.constraint_builder.global_localization_min_score = 0.7
 POSE_GRAPH.optimization_problem.huber_scale =1e2
 
--- POSE_GRAPH.constraint_builder.loop_closure_translation_weight
--- POSE_GRAPH.constraint_builder.loop_closure_rotation_weight
+POSE_GRAPH.constraint_builder.loop_closure_translation_weight = 100000
+POSE_GRAPH.constraint_builder.loop_closure_rotation_weight = 10000
 -- POSE_GRAPH.matcher_translation_weight
 -- POSE_GRAPH.matcher_rotation_weight
 -- POSE_GRAPH.optimization_problem.*_weight
