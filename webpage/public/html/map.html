@@ -65,12 +65,13 @@
     </div>
 
     <script>
+        var zoomsize
 
-        var map = new naver.maps.Map('map', {
-            mapTypeId: naver.maps.MapTypeId.HYBRID,
-            center: new naver.maps.LatLng(37.29729, 126.836795),
-            zoom: 19
-        });
+        if (window.innerWidth < 700) {
+            zoomsize = 18
+        } else {
+            zoomsize = 19
+        }
 
         var marker1 = new naver.maps.Marker({ // 1공3공 사이
             position: new naver.maps.LatLng(37.297567, 126.836710),

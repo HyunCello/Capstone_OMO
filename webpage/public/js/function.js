@@ -15,7 +15,7 @@ $(document).ready(function () {
     location.href = "orderlist.html";
   });
   $("#gotomap").on("click", function () {
-    location.href = "map.html";
+    location.href = "html/map.html";
   });
   $("#gotomap_robot").on("click", function () {
     location.href = "robotmap.html";
@@ -24,7 +24,7 @@ $(document).ready(function () {
     location.href = "password.html";
   });
   $("#gotomaker").on("click", function () {
-    location.href = "maker.html";
+    location.href = "html/maker.html";
   });
   $("#goback").on("click", function () {
     history.go(-1);
