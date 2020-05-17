@@ -23,6 +23,9 @@ $(document).ready(function () {
   $("#gotopassword").on("click", function () {
     location.href = "password.html";
   });
+  $("#gotolock").on("click", function () {
+    location.href = "lock.html";
+  });
   $("#gotomaker").on("click", function () {
     location.href = "html/maker.html";
   });
