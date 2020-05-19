@@ -11,22 +11,41 @@ class GoalPublisher():
         self.goal_pub = rospy.Publisher("move_base_simple/goal", PoseStamped, queue_size=1)
         self.msg = PoseStamped()
 
+        #self.msg.header.seq = i
         self.msg.header.frame_id = "map"
         self.msg.pose.position.z = 0.0
         self.msg.pose.orientation.x = 0.0
         self.msg.pose.orientation.y = 0.0
 
-    def send_goal(self, flag):
-        if flag == 1:
-            #self.msg.header.seq = i
+    def send_goal(self, goalNo):
+        if goalNo == 0:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 0.2
+            self.msg.pose.position.y = 1.0
+            self.msg.pose.orientation.z = 0.7
+            self.msg.pose.orientation.w = 0.7
+        elif goalNo == 1:
             self.msg.header.stamp = rospy.Time.now()
             self.msg.pose.position.x = 2.5
             self.msg.pose.position.y = 1.1
             self.msg.pose.orientation.z = -0.7
             self.msg.pose.orientation.w = 0.7
+        elif goalNo == 10:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 0.2
+            self.msg.pose.position.y = 1.0
+            self.msg.pose.orientation.z = 1.0
+            self.msg.pose.orientation.w = 0.0
+        elif goalNo == 9999:  # home
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 0.0
+            self.msg.pose.position.y = 0.0
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
         
         self.goal_pub.publish(self.msg)
-        rospy.loginfo('flag : ' + str(flag) + ' Goal published!')
+        rospy.loginfo('Goal No.' + str(goalNo) + ' published!')
+     
 
 
 class FlagSubscriber():
@@ -60,7 +79,6 @@ class ResultSubscriber():
     
     def _callback(self, msg):
         self.result_buf = (msg.status.text == 'Goal reached.')
-        rospy.loginfo(self.result_buf)
 
 
 def dalsu_main():
@@ -76,16 +94,38 @@ def dalsu_main():
         goal_flag = flag_sub.wait_flag()
         result = result_sub.wait_result()
 
-        if result is True:
-            rospy.loginfo('Approached Goal!')
+        # if result is True:
+        #     rospy.loginfo('Goal reached!')
 
         if goal_flag is None:
             rate.sleep()
             continue
-        else:
-            goal_pub.send_goal(goal_flag)
-            rate.sleep()
         
+        elif goal_flag == 0:  # GoToHome
+            goal_pub.send_goal(9999)
+            rate.sleep()
+
+        elif goal_flag == 1:
+            goal_pub.send_goal(0)
+            rate.sleep()
+
+            while result is False:
+                result = result_sub.wait_result()
+                rate.sleep()
+            
+            goal_pub.send_goal(1)
+            rate.sleep()
+
+        elif goal_flag == 2:
+            goal_pub.send_goal(10)
+            rate.sleep()
+
+            while result is False:
+                result = result_sub.wait_result()
+                rate.sleep()
+            
+            goal_pub.send_goal(9999)
+            rate.sleep()
         
 
 
