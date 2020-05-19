@@ -45,8 +45,8 @@ main {
   padding-bottom: 5%;
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 1.4%;
+  margin-right: 1.4%;
   align-items: center;
   font-size: 1.4em;
   width: 60%;
@@ -61,11 +61,11 @@ main {
   padding-bottom: 5%;
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 1.4%;
+  margin-right: 1.4%;
   align-items: center;
   font-size: 1.4em;
-  width: 30%;
+  width: 29%;
   height: 7%;
   background: rgba(51, 73, 88, 0.2);
   text-align: center;
@@ -73,15 +73,15 @@ main {
   vertical-align: middle;
 }
 .verticalblock {
-  padding-top: 14%;
-  padding-bottom: 14%;
-  margin-top: 3.2%;
-  margin-bottom: 3.2%;
-  margin-left: 3%;
-  margin-right: 3%;
+  padding-top: 17%;
+  padding-bottom: 17%;
+  margin-top: 1.4%;
+  margin-bottom: 1.4%;
+  margin-left: 1.4%;
+  margin-right: 1.4%;
   align-items: center;
   font-size: 2.5em;
-  width: 40%;
+  width: 44.5%;
   height: 2%;
   background: rgba(124, 207, 91, 0.527);
   text-align: center;

@@ -1,49 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
+  <meta charset="utf-8" />
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
 
-<script type="text/javascript" type="text/javascript">
-  // Connecting to ROS
-  // -----------------
-publish();
-function publish (){
-  var ros = new ROSLIB.Ros({
-    url : 'ws://localhost:9090'
-  });
+  <script type="text/javascript" type="text/javascript">
+    // Connecting to ROS
+    // -----------------
+    publish();
+    function publish() {
+      var ros = new ROSLIB.Ros({
+        url: 'ws://localhost:9090'
+      });
 
-  ros.on('connection', function() {
-    console.log('Connected to websocket server.');
-  });
+      ros.on('connection', function () {
+        console.log('Connected to websocket server.');
+      });
 
-  ros.on('error', function(error) {
-    console.log('Error connecting to websocket server: ', error);
-  });
+      ros.on('error', function (error) {
+        console.log('Error connecting to websocket server: ', error);
+      });
 
-  ros.on('close', function() {
-    console.log('Connection to websocket server closed.');
-  });
-
-
-  var talker = new ROSLIB.Topic({
-    ros : ros,
-    name : '/chatter',
-    messageType : 'std_msgs/String'
-  });
+      ros.on('close', function () {
+        console.log('Connection to websocket server closed.');
+      });
 
 
-  talker.subscribe(function(msg) {
-      console.log('%s : %s',talker.name,msg.data);
-      talker.unsubscribe();
-  });
-  //setTimeout('location.reload()',500); 
-  
-}
+      var talker = new ROSLIB.Topic({
+        ros: ros,
+        name: '/chatter',
+        messageType: 'std_msgs/String'
+      });
 
-</script>
+
+      talker.subscribe(function (msg) {
+        console.log('%s : %s', talker.name, msg.data);
+        talker.unsubscribe();
+      });
+      setTimeout("history.go(0);", 1000);
+
+    }
+
+  </script>
 </head>
 
 <body>
@@ -51,5 +53,5 @@ function publish (){
   <p>Check your Web Console for output.</p>
 
 </body>
+
 </html>
-[출처] ROS Webtools 와 tornado 를 이용한 또리의 web control panel #1|작성자 돌
