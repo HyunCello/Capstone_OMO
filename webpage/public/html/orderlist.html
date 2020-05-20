@@ -26,9 +26,14 @@
     <br />
     <input type="button" value="추가" onclick="add_div()"><br />
     <div id="room_type">
-
+        <!--
         <div onclick="remove_div(this)">
             완료
+        </div>
+-->
+
+        <div onclick="bb(this)">
+            주문 처리
         </div>
 
     </div>
@@ -47,7 +52,7 @@
     <script type="text/javascript">
         var names = []
         var place = []
-
+        var key = []
 
         var dbTestRef = database.ref('test/')
 
@@ -55,9 +60,12 @@
             dbTestRef.on('child_added', function (data) {
                 names.push(data.val().name)
                 place.push(data.val().location)
+                key.push(data.key)
+
 
                 console.log(names)
                 console.log(place)
+                console.log(key)
             })
         }
 
@@ -70,12 +78,15 @@
                 div.innerHTML = names[i];
                 div2.className = "buttonblock"
 
-                div2.innerHTML = document.getElementById('room_type').innerHTML;
+
+                //div2.innerHTML = document.getElementById('room_type').innerHTML;
+                div2.innerHTML = `<div onclick="location.href='lock.html?${key[i]}'">주문처리</div>`
                 document.getElementById('field').appendChild(div);
                 document.getElementById('field').appendChild(div2);
                 console.log("creatediv")
             }
             console.log("ㅠㅠ")
+            console.log(names)
         }
             , 3000
         )
@@ -88,6 +99,13 @@
         }
 
         window.onload = initdatabase()
+    </script>
+    <script type="text/javascript">
+        function bb(menu) {
+            name = menu
+            location.href = "lock.html?" + name + ":"
+        }
+
     </script>
 
 </body>
