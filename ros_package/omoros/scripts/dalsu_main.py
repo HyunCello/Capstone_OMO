@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+######## last update : 20.05.21 18:00 by kyp
 import rospy
 from std_msgs.msg import Int32
 from geometry_msgs.msg import PoseStamped
@@ -18,24 +19,46 @@ class GoalPublisher():
         self.msg.pose.orientation.y = 0.0
 
     def send_goal(self, goalNo):
+        # in turtlebot
+        # if goalNo == 0:
+        #     self.msg.header.stamp = rospy.Time.now()
+        #     self.msg.pose.position.x = 0.2
+        #     self.msg.pose.position.y = 1.0
+        #     self.msg.pose.orientation.z = 0.7
+        #     self.msg.pose.orientation.w = 0.7
+        # elif goalNo == 1:
+        #     self.msg.header.stamp = rospy.Time.now()
+        #     self.msg.pose.position.x = 2.5
+        #     self.msg.pose.position.y = 1.1
+        #     self.msg.pose.orientation.z = -0.7
+        #     self.msg.pose.orientation.w = 0.7
+        # elif goalNo == 10:
+        #     self.msg.header.stamp = rospy.Time.now()
+        #     self.msg.pose.position.x = 0.2
+        #     self.msg.pose.position.y = 1.0
+        #     self.msg.pose.orientation.z = 1.0
+        #     self.msg.pose.orientation.w = 0.0
+
+        # in dalsu
         if goalNo == 0:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 0.2
-            self.msg.pose.position.y = 1.0
-            self.msg.pose.orientation.z = 0.7
-            self.msg.pose.orientation.w = 0.7
+            self.msg.pose.position.x = 1.3
+            self.msg.pose.position.y = -2.2
+            self.msg.pose.orientation.z = 0.05
+            self.msg.pose.orientation.w = 1.0
         elif goalNo == 1:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 2.5
-            self.msg.pose.position.y = 1.1
-            self.msg.pose.orientation.z = -0.7
-            self.msg.pose.orientation.w = 0.7
-        elif goalNo == 10:
+            self.msg.pose.position.x = 4.0
+            self.msg.pose.position.y = -1.9
+            self.msg.pose.orientation.z = 0.74
+            self.msg.pose.orientation.w = 0.67
+        elif goalNo == 2:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 0.2
-            self.msg.pose.position.y = 1.0
+            self.msg.pose.position.x = 3.35
+            self.msg.pose.position.y = 3.69
             self.msg.pose.orientation.z = 1.0
-            self.msg.pose.orientation.w = 0.0
+            self.msg.pose.orientation.w = -0.07
+
         elif goalNo == 9999:  # home
             self.msg.header.stamp = rospy.Time.now()
             self.msg.pose.position.x = 0.0
@@ -129,6 +152,8 @@ def dalsu_main():
             goal_pub.send_goal(0)
             result_sub.wait_result()
             goal_pub.send_goal(1)
+            result_sub.wait_result()
+            goal_pub.send_goal(2)
             result_sub.wait_result()
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
             stat_pub.send_stat(3)
