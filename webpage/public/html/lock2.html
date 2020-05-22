@@ -6,8 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+
     <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
     <title>잠금</title>
 
     <script type="text/javascript"
@@ -27,7 +41,6 @@
 
     </div>
 
-
     <div class="subblock">
 
         잠금 해제하기
@@ -36,11 +49,6 @@
     <div class="buttonblock" id="robotstatus">
 
         상태불명
-
-    </div>
-    <div class="subblock">
-
-        서브 블록
 
     </div>
     <div class="subblock" id="goback">
@@ -54,48 +62,6 @@
 
 </body>
 
-<script type="text/javascript" type="text/javascript">
-    // Connecting to ROS
-    // -----------------
-    publish();
-    function publish() {
-        var ros = new ROSLIB.Ros({
-            url: 'ws://localhost:9090'
-        });
-
-        ros.on('connection', function () {
-            console.log('Connected to websocket server.');
-        });
-
-        ros.on('error', function (error) {
-            console.log('Error connecting to websocket server: ', error);
-        });
-
-        ros.on('close', function () {
-            console.log('Connection to websocket server closed.');
-        });
-
-        var talker = new ROSLIB.Topic({
-            ros: ros,
-            name: '/chatter',
-            messageType: 'std_msgs/String'
-        });
-
-        talker.subscribe(function (msg) {
-            console.log('%s : %s', talker.name, msg.data);
-            var status = msg.data
-            talker.unsubscribe();
-        });
-        setTimeout("history.go(0);", 2000);
-        if (status == 1) {
-            document.getElementById("robotstatus").innerHTML = "잠금해제 가능";
-        }
-        else {
-            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
-            console.log(status)
-        }
-    }    
-</script>
 <script type="text/javascript" src="../js/function.js"></script>
 
 </html>
