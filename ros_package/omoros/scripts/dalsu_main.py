@@ -58,6 +58,20 @@ class GoalPublisher():
             self.msg.pose.position.y = 3.69
             self.msg.pose.orientation.z = 1.0
             self.msg.pose.orientation.w = -0.07
+        
+        if goalNo == 10:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -0.17
+            self.msg.pose.position.y = 3.12
+            self.msg.pose.orientation.z = 0.09
+            self.msg.pose.orientation.w = 1.0
+        elif goalNo == 11:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 3.0
+            self.msg.pose.position.y = 3.75
+            self.msg.pose.orientation.z = -0.65
+            self.msg.pose.orientation.w = 0.76
+        
 
         elif goalNo == 9999:  # home
             self.msg.header.stamp = rospy.Time.now()
@@ -158,14 +172,14 @@ def dalsu_main():
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
             stat_pub.send_stat(3)
 
-        elif goal_pos == 10:
-            stat_pub.send_stat(4)
+        elif goal_pos == 2:
+            stat_pub.send_stat(2)
             goal_pub.send_goal(10)
             result_sub.wait_result()
-            goal_pub.send_goal(9999)
+            goal_pub.send_goal(11)
             result_sub.wait_result()
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
-            stat_pub.send_stat(1)
+            stat_pub.send_stat(3)
         ########## Arrive at Goal ##########
         
 
