@@ -144,12 +144,18 @@ def dalsu_main():
     pos_sub = GoalPosSubscriber()
     result_sub = ResultSubscriber()
 
-    rate = rospy.Rate(10) # 10hz
+    test_pub = rospy.Publisher("lock", Int32, queue_size=1)
+    test_msg = Int32()
+    test_msg.data = 1
+
+    rate = rospy.Rate(1) # 10hz
     rospy.loginfo("Dalsu_main Started")
     stat_pub.send_stat(1)
 
     while not rospy.is_shutdown():
         goal_pos = pos_sub.wait_pos()
+
+        test_pub.publish(test_msg)
 
         ########## Move to Goal ##########
         if goal_pos is None:
