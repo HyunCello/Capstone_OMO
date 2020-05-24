@@ -7,12 +7,16 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    
     <script src="../js/jquery-3.4.1.min.js"></script>
     <title>잠금</title>
-
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
+
+<script type="text/javascript" src="../js/menu.js"></script>
 
 
 
@@ -36,6 +40,9 @@
     <div class="buttonblock" id="robotstatus">
 
         상태불명
+        <script>
+            
+        </script>
 
     </div>
     <div class="subblock">
@@ -60,7 +67,7 @@
     publish();
     function publish() {
         var ros = new ROSLIB.Ros({
-            url: 'ws://192.168.43.255'
+            url: 'ws://0.0.0.0:9090'
         });
 
         ros.on('connection', function () {
@@ -78,22 +85,27 @@
         var talker = new ROSLIB.Topic({
             ros: ros,
             name: '/lock',
-            messageType: 'std_msgs/Int16'
+            messageType: 'std_msgs/Int32'
         });
 
         talker.subscribe(function (msg) {
-            console.log('%s : %s', talker.name, msg.data);
-            var status = msg.data
-            talker.unsubscribe();
-        });
-        setTimeout("history.go(0);", 2000);
-        if (status == 1) {
-            document.getElementById("robotstatus").innerHTML = "잠금해제 가능";
+            if (msg.data == 1) {
+            console.log(document.location.href.split('?')[1])
+            document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
         }
         else {
             document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
             console.log(status)
         }
+            console.log('%s : %s', talker.name, msg.data);
+            var status = msg.data
+            console.log("hi")
+            talker.unsubscribe();
+            
+        });
+
+        setTimeout("history.go(0);", 10000);
+        function abc(){}
     }    
 </script>
 <script type="text/javascript" src="../js/function.js"></script>

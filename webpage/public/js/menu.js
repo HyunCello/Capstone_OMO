@@ -90,16 +90,17 @@ function editmenu() {
   });
 }
 
-function deletemenu() {
-  var keys = [];
-  var dbTestRef = database.ref("test/");
-  setTimeout(
-    dbTestRef.on("child_added", function (data) {
-      keys.push(data.key);
-    }),
-    1000
-  );
-  var dbTestRef3 = database.ref("test/" + keys[0]).remove();
-  console.log(keys);
+function deletemenu(key) {
+  // var keys = [];
+  // var dbTestRef = database.ref("test/");
+  // setTimeout(
+  //   dbTestRef.on("child_added", function (data) {
+  //     keys.push(data.key);
+  //   }),
+  //   1000
+  // );
+  var dbTestRef3 = database.ref("test/" + key).remove();
+  console.log(key);
   alert("처리되었습니다");
+  location.href = "seller.html"
 }
