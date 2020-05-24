@@ -60,7 +60,7 @@
     publish();
     function publish() {
         var ros = new ROSLIB.Ros({
-            url: 'ws://localhost:9090'
+            url: 'ws://192.168.43.255'
         });
 
         ros.on('connection', function () {
@@ -77,8 +77,8 @@
 
         var talker = new ROSLIB.Topic({
             ros: ros,
-            name: '/chatter',
-            messageType: 'std_msgs/String'
+            name: '/lock',
+            messageType: 'std_msgs/Int16'
         });
 
         talker.subscribe(function (msg) {
