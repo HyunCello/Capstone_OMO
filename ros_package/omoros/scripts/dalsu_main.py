@@ -20,24 +20,24 @@ class GoalPublisher():
 
     def send_goal(self, goalNo):
         # in turtlebot
-        # if goalNo == 0:
-        #     self.msg.header.stamp = rospy.Time.now()
-        #     self.msg.pose.position.x = 0.2
-        #     self.msg.pose.position.y = 1.0
-        #     self.msg.pose.orientation.z = 0.7
-        #     self.msg.pose.orientation.w = 0.7
-        # elif goalNo == 1:
-        #     self.msg.header.stamp = rospy.Time.now()
-        #     self.msg.pose.position.x = 2.5
-        #     self.msg.pose.position.y = 1.1
-        #     self.msg.pose.orientation.z = -0.7
-        #     self.msg.pose.orientation.w = 0.7
-        # elif goalNo == 10:
-        #     self.msg.header.stamp = rospy.Time.now()
-        #     self.msg.pose.position.x = 0.2
-        #     self.msg.pose.position.y = 1.0
-        #     self.msg.pose.orientation.z = 1.0
-        #     self.msg.pose.orientation.w = 0.0
+        if goalNo == 0:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 0.2
+            self.msg.pose.position.y = 1.0
+            self.msg.pose.orientation.z = 0.7
+            self.msg.pose.orientation.w = 0.7
+        elif goalNo == 1:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 2.5
+            self.msg.pose.position.y = 1.1
+            self.msg.pose.orientation.z = -0.7
+            self.msg.pose.orientation.w = 0.7
+        elif goalNo == 10:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 0.2
+            self.msg.pose.position.y = 1.0
+            self.msg.pose.orientation.z = 1.0
+            self.msg.pose.orientation.w = 0.0
 
         # in dalsu
         if goalNo == 0:
@@ -81,7 +81,7 @@ class GoalPublisher():
             self.msg.pose.orientation.w = 1.0
         
         self.goal_pub.publish(self.msg)
-        rospy.loginfo('Goal No.' + str(goalNo) + ' published!')
+        # rospy.loginfo('Goal No.' + str(goalNo) + ' published!')
         rospy.Rate(10).sleep()
 
 
@@ -175,6 +175,7 @@ def dalsu_main():
             status = 4
             goal_pub.send_goal(9999)
             wait_moving(status)
+            status = 1
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
 
         elif goal_pos == 1:
