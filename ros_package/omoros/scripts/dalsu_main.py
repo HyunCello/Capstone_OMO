@@ -129,12 +129,15 @@ class ResultSubscriber():
         self.result_buf = False
 
     def wait_result(self):
-        while self.result_buf is False:
-            rospy.Rate(10).sleep()
-        self.result_buf = False
+        if self.result_buf is True:
+            self.result_buf = False
+            return True
+        else:
+            return False
     
     def _callback(self, msg):
         self.result_buf = (msg.status.text == 'Goal reached.')
+
 
 
 def dalsu_main():
@@ -144,48 +147,55 @@ def dalsu_main():
     pos_sub = GoalPosSubscriber()
     result_sub = ResultSubscriber()
 
-    test_pub = rospy.Publisher("lock", Int32, queue_size=1)
-    test_msg = Int32()
-    test_msg.data = 1
+    # test_pub = rospy.Publisher("lock", Int32, queue_size=1)
+    # test_msg = Int32()
+    # test_msg.data = 1
 
-    rate = rospy.Rate(1) # 10hz
+    rate = rospy.Rate(1) # 1hz
     rospy.loginfo("Dalsu_main Started")
-    stat_pub.send_stat(1)
+    status = 1
+
+    def dalsu_sleep(status):
+        stat_pub.send_stat(status)
+        rate.sleep()
+
+    def wait_moving(status):
+        while result_sub.wait_result() is False:
+            dalsu_sleep(status)
 
     while not rospy.is_shutdown():
         goal_pos = pos_sub.wait_pos()
 
-        test_pub.publish(test_msg)
-
         ########## Move to Goal ##########
         if goal_pos is None:
-            rate.sleep()
+            dalsu_sleep(status)
             continue
         
-        elif goal_pos == 0:  # GoToHome
+        elif goal_pos == 0:  # GoToHome_test
+            status = 4
             goal_pub.send_goal(9999)
-            result_sub.wait_result()
+            wait_moving(status)
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
 
         elif goal_pos == 1:
-            stat_pub.send_stat(2)
+            status = 2
             goal_pub.send_goal(0)
-            result_sub.wait_result()
+            wait_moving(status)
             goal_pub.send_goal(1)
-            result_sub.wait_result()
+            wait_moving(status)
             goal_pub.send_goal(2)
-            result_sub.wait_result()
+            wait_moving(status)
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
-            stat_pub.send_stat(3)
+            status = 3
 
         elif goal_pos == 2:
-            stat_pub.send_stat(2)
+            status = 2
             goal_pub.send_goal(10)
-            result_sub.wait_result()
+            wait_moving(status)
             goal_pub.send_goal(11)
-            result_sub.wait_result()
+            wait_moving(status)
             rospy.loginfo('Arrived at goal ' + str(goal_pos))
-            stat_pub.send_stat(3)
+            status = 3
         ########## Arrive at Goal ##########
         
 
