@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    
+
     <script src="../js/jquery-3.4.1.min.js"></script>
     <title>잠금</title>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
@@ -16,7 +16,7 @@
         src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
 
-<script type="text/javascript" src="../js/menu.js"></script>
+    <script type="text/javascript" src="../js/menu.js"></script>
 
 
 
@@ -40,11 +40,18 @@
     <div class="buttonblock" id="robotstatus">
 
         상태불명
-        <script>
-            
-        </script>
 
     </div>
+    <div class="subblock">
+
+        그냥 잠금 해제
+    </div>
+    <div class="buttonblock" id="robotstatus1">
+
+        상태불명
+
+    </div>
+
     <div class="subblock">
 
         서브 블록
@@ -87,9 +94,40 @@
             name: '/lock',
             messageType: 'std_msgs/Int32'
         });
-
         talker.subscribe(function (msg) {
-            if (msg.data == 1) {
+
+            console.log('%s : %s', talker.name, msg.data);
+            var status = msg.data
+            console.log("hi")
+            talker.unsubscribe();
+
+        });
+
+        var robot_status = new ROSLIB.Topic({
+            ros: ros,
+            name: '/robotStatus',
+            messageType: 'std_msgs/Int32'
+        });
+        robot_status.subscribe(function (msg) {
+
+            console.log('%s : %s', robot_status.name, msg.data);
+            var data = msg.data
+            console.log("hi")
+            talker.unsubscribe();
+
+        });
+
+        if (data == 1) {
+            console.log(document.location.href.split('?')[1])
+            document.getElementById("robotstatus").innerHTML = `<div onclick='opendoor()' >잠금해제 가능</div>`;
+        }
+        else {
+            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
+            console.log(status)
+        }
+
+
+        if (status == 1) {
             console.log(document.location.href.split('?')[1])
             document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
         }
@@ -97,15 +135,20 @@
             document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
             console.log(status)
         }
-            console.log('%s : %s', talker.name, msg.data);
-            var status = msg.data
-            console.log("hi")
-            talker.unsubscribe();
-            
-        });
-
         setTimeout("history.go(0);", 10000);
-        function abc(){}
+        function opendoor() {
+            var opendoor = new ROSLIB.Topic({
+                ros: ros,
+                name: '/opendoor',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var open = new ROSLIB.Message({
+                data: 1
+            });
+            console.log("Publishing cmd_vel");
+            opendoor.publish(open);
+        }
     }    
 </script>
 <script type="text/javascript" src="../js/function.js"></script>
