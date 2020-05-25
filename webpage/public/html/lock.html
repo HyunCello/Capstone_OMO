@@ -102,40 +102,6 @@
             talker.unsubscribe();
 
         });
-
-        var robot_status = new ROSLIB.Topic({
-            ros: ros,
-            name: '/robotStatus',
-            messageType: 'std_msgs/Int32'
-        });
-        robot_status.subscribe(function (msg) {
-
-            console.log('%s : %s', robot_status.name, msg.data);
-            var data = msg.data
-            console.log("hi")
-            talker.unsubscribe();
-
-        });
-
-        if (data == 1) {
-            console.log(document.location.href.split('?')[1])
-            document.getElementById("robotstatus").innerHTML = `<div onclick='opendoor()' >잠금해제 가능</div>`;
-        }
-        else {
-            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
-            console.log(status)
-        }
-
-
-        if (status == 1) {
-            console.log(document.location.href.split('?')[1])
-            document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
-        }
-        else {
-            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
-            console.log(status)
-        }
-        setTimeout("history.go(0);", 10000);
         function opendoor() {
             var opendoor = new ROSLIB.Topic({
                 ros: ros,
@@ -149,6 +115,42 @@
             console.log("Publishing cmd_vel");
             opendoor.publish(open);
         }
+
+        var robot_status = new ROSLIB.Topic({
+            ros: ros,
+            name: '/robotStatus',
+            messageType: 'std_msgs/Int32'
+        });
+        robot_status.subscribe(function (msg) {
+
+            console.log('%s : %s', robot_status.name, msg.data);
+            console.log("hi")
+            if (msg.data == 1) {
+            console.log(document.location.href.split('?')[1])
+            document.getElementById("robotstatus1").innerHTML = `<div onclick='opendoor()' >잠금해제 가능</div>`;
+        }
+        else {
+            document.getElementById("robotstatus1").innerHTML = "잠금해제 불가";
+            console.log(status)
+        }
+
+
+        if (msg.data == 1) {
+            console.log(document.location.href.split('?')[1])
+            document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
+        }
+        else {
+            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
+            console.log(status)
+        }     
+
+            talker.unsubscribe();
+
+        });
+
+
+        setTimeout("history.go(0);", 10000);
+
     }    
 </script>
 <script type="text/javascript" src="../js/function.js"></script>
