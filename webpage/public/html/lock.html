@@ -52,9 +52,9 @@
 
     </div>
 
-    <div class="subblock">
+    <div class="subblock" onclick="closedoor()">
 
-        서브 블록
+        문닫기
 
     </div>
     <div class="subblock" id="goback">
@@ -63,96 +63,142 @@
 
     </div>
 
+    <script type="text/javascript" type="text/javascript">
+        // Connecting to ROS
+        // -----------------
+        publish();
+        function publish() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+    
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+    
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+    
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+    
+            var talker = new ROSLIB.Topic({
+                ros: ros,
+                name: '/lock',
+                messageType: 'std_msgs/Int32'
+            });
+            talker.subscribe(function (msg) {
+    
+                console.log('%s : %s', talker.name, msg.data);
+                var status = msg.data
+                console.log("hi")
+                talker.unsubscribe();
+    
+            });
+    
 
+            var robot_status = new ROSLIB.Topic({
+                ros: ros,
+                name: '/robotStatus',
+                messageType: 'std_msgs/Int32'
+            });
+            robot_status.subscribe(function (msg) {
+    
+                console.log('%s : %s', robot_status.name, msg.data);
+                console.log("hi")
+                if (msg.data == 1) {
+                console.log(document.location.href.split('?')[1])
+                document.getElementById("robotstatus1").innerHTML = `<div onclick="opendoor()">잠금해제 가능 </div>`;
+            }
+            else {
+                document.getElementById("robotstatus1").innerHTML = "잠금해제 불가";
+                console.log(status)
+            }
+    
+    
+            if (msg.data == 1) {
+                console.log(document.location.href.split('?')[1])
+                document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
+            }
+            else {
+                document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
+                console.log(status)
+            }     
+
+                talker.unsubscribe();
+    
+            });
+    
+    
+            setTimeout("history.go(0);", 10000);
+    
+        }  
+        function opendoor() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+    
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+    
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+    
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var opendoor = new ROSLIB.Topic({
+                    ros: ros,
+                    name: '/doorstatus',
+                    messageType: 'std_msgs/Int32'
+                });
+    
+                var open = new ROSLIB.Message({
+                    data: 1
+                });
+                console.log("Publishing cmd_vel");
+                opendoor.publish(open);
+        }
+        function closedoor() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+    
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+    
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+    
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+
+            var opendoor = new ROSLIB.Topic({
+                    ros: ros,
+                    name: '/doorstatus',
+                    messageType: 'std_msgs/Int32'
+                });
+    
+                var open = new ROSLIB.Message({
+                    data: 2
+                });
+                console.log("Publishing cmd_vel");
+                opendoor.publish(open);
+        }
+
+    </script>
 
 
 </body>
 
-<script type="text/javascript" type="text/javascript">
-    // Connecting to ROS
-    // -----------------
-    publish();
-    function publish() {
-        var ros = new ROSLIB.Ros({
-            url: 'ws://192.168.43.250:9090'
-        });
 
-        ros.on('connection', function () {
-            console.log('Connected to websocket server.');
-        });
-
-        ros.on('error', function (error) {
-            console.log('Error connecting to websocket server: ', error);
-        });
-
-        ros.on('close', function () {
-            console.log('Connection to websocket server closed.');
-        });
-
-        var talker = new ROSLIB.Topic({
-            ros: ros,
-            name: '/lock',
-            messageType: 'std_msgs/Int32'
-        });
-        talker.subscribe(function (msg) {
-
-            console.log('%s : %s', talker.name, msg.data);
-            var status = msg.data
-            console.log("hi")
-            talker.unsubscribe();
-
-        });
-        function opendoor() {
-            var opendoor = new ROSLIB.Topic({
-                ros: ros,
-                name: '/opendoor',
-                messageType: 'std_msgs/Int32'
-            });
-
-            var open = new ROSLIB.Message({
-                data: 1
-            });
-            console.log("Publishing cmd_vel");
-            opendoor.publish(open);
-        }
-
-        var robot_status = new ROSLIB.Topic({
-            ros: ros,
-            name: '/robotStatus',
-            messageType: 'std_msgs/Int32'
-        });
-        robot_status.subscribe(function (msg) {
-
-            console.log('%s : %s', robot_status.name, msg.data);
-            console.log("hi")
-            if (msg.data == 1) {
-            console.log(document.location.href.split('?')[1])
-            document.getElementById("robotstatus1").innerHTML = `<div onclick='opendoor()' >잠금해제 가능</div>`;
-        }
-        else {
-            document.getElementById("robotstatus1").innerHTML = "잠금해제 불가";
-            console.log(status)
-        }
-
-
-        if (msg.data == 1) {
-            console.log(document.location.href.split('?')[1])
-            document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
-        }
-        else {
-            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
-            console.log(status)
-        }     
-
-            talker.unsubscribe();
-
-        });
-
-
-        setTimeout("history.go(0);", 10000);
-
-    }    
-</script>
 <script type="text/javascript" src="../js/function.js"></script>
 
 </html>
