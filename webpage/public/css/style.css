@@ -37,6 +37,24 @@ main {
   text-align: center;
   vertical-align: middle;
   display: inline-table;
+  border-radius: 30px;
+}
+.mainblock_content {
+  padding-top: 9.7%;
+  padding-bottom: 9.7%;
+  margin-top: 1.7%;
+  margin-bottom: 1.7%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  font-size: 2em;
+  width: 92.3%;
+  height: 6%;
+  background: rgba(63, 140, 228, 0.2);
+  text-align: center;
+  vertical-align: middle;
+  display: inline-table;
+  border-radius: 30px;
 }
 
 .subblock {
@@ -72,8 +90,8 @@ main {
   vertical-align: middle;
 }
 .verticalblock {
-  padding-top: 17%;
-  padding-bottom: 17%;
+  padding-top: 16.7%;
+  padding-bottom: 16.7%;
   margin-top: 1.4%;
   margin-bottom: 1.4%;
   margin-left: 1.4%;
@@ -86,6 +104,7 @@ main {
   text-align: center;
   display: inline-table;
   vertical-align: middle;
+  border-radius: 15%;
 }
 .subshortblock {
   padding-top: 11%;
@@ -101,4 +120,5 @@ main {
   text-align: center;
   display: inline-block;
   vertical-align: middle;
+  border-radius: 40px;
 }

@@ -5,6 +5,9 @@ $(document).ready(function () {
   $("#gotoorderer").on("click", function () {
     location.href = "html/orderer.html";
   });
+  $("#gotoorderer2").on("click", function () {
+    location.href = "orderer.html";
+  });
   $("#gotoseller").on("click", function () {
     location.href = "html/seller.html";
   });
@@ -15,7 +18,7 @@ $(document).ready(function () {
     location.href = "orderlist.html";
   });
   $("#gotomap").on("click", function () {
-    location.href = "html/map.html";
+    location.href = "html/map_justsee.html";
   });
   $("#gotomap_robot").on("click", function () {
     location.href = "robotmap.html";
@@ -31,6 +34,7 @@ $(document).ready(function () {
   });
   $("#goback").on("click", function () {
     history.go(-1);
+    location.reload;
   });
   $("#gototest").on("click", function () {
     location.href = "html/test.html";
