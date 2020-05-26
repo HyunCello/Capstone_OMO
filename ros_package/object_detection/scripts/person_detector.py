@@ -15,7 +15,7 @@ from object_detection.utils import visualization_utils as vis_util
 from object_detection.utils import ops as utils_ops
 from std_msgs.msg import Int32
 
-topic_msg=''
+
 
 class ObjectDetector():
     DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
@@ -130,7 +130,6 @@ class ObjectDetector():
         return False
 
     def detect_objects(self, frame):
-        global topic_msg
         time1 = time.time()
         # Grab a single frame of video
 
@@ -162,44 +161,17 @@ class ObjectDetector():
         )
         
         classes = self.output_dict['detection_classes']
-        boxes = self.output_dict['detection_boxes']
+        topic_msg = 0
 
 
-        for i in range(len(boxes)):
-            #print('classes: ', classes[i])
-            #print('boxes: ', boxes[i])
-            height = (boxes[0][2] - boxes[0][0]) * 480
-            width= (boxes[0][3] - boxes[0][1]) * 640
-            area= width * height
-            #print("area: %0.1f" % area )
-            mid_height = (boxes[0][2] + boxes[0][0])/2 * 480
-            mid_width = (boxes[0][3] + boxes[0][1])/2 * 640
-
-            # print('mid_width: ', mid_width)
-            # print('mid_height: ', mid_height)
-            if (classes == 1).any():
-
-                if (area > 130000) :
-                    print('Person too close !!')
-                    topic_msg = 1
-
-                elif (mid_width > 320) & (area > 80000) :
-                    print('Turn left to avoid person')
-                    topic_msg = 2
-
-                elif (mid_width < 320) & (area > 80000) :
-                    print('Turn right to avoid person')
-                    topic_msg = 3
-
-                else :
-                    print("person detected & area: %0.1f" % area )
-                    topic_msg = 4
+        print('1 - ', classes)
+        print('2 - ', np.array(classes))
 
 
         time4 = time.time()
 
         #print("%0.1f, %0.1f, %0.1f sec" % (time2 - time1, time3 - time2, time4 - time3))
-        return frame
+        return frame, topic_msg
 
     def get_jpg_bytes(self):
         frame = self.get_frame()
@@ -214,36 +186,30 @@ if __name__ == '__main__':
     import camera
     from object_detection.utils import visualization_utils as vis_util
 
-    #global topic_msg
-
-    # detector = ObjectDetector('ssd_mobilenet_v1_coco_2017_11_17')
     detector = ObjectDetector('/home/kyp/catkin_ws/src/object_detection/scripts/ssd_mobilenet_v1_coco_2017_11_17')
-    person_pub = rospy.Publisher('objectDetect', Int32, queue_size=1)
-    rospy.init_node('object_detector', anonymous=False)
+    person_pub = rospy.Publisher('personDetected', Int32, queue_size=1)
+    rospy.init_node('person_detect', anonymous=False)
     rate = rospy.Rate(10)
 
     #detector = ObjectDetector('mask_rcnn_inception_v2_coco_2018_01_28')
     #detector = ObjectDetector('pet', label_file='data/pet_label_map.pbtxt')
 
     # Using OpenCV to capture from device 0. If you have trouble capturing
-    # from a webcam, comment the line below out and use a video file
-    # instead.
+    # from a webcam, comment the line below out and use a video file instead.
     cam = camera.VideoCamera()
     print("press `q` to quit")
 
     while not rospy.is_shutdown():
         frame = cam.get_frame()
-        frame = detector.detect_objects(frame)
         person_msg = Int32()
-        person_msg.data = topic_msg
+
+        frame, person_msg.data = detector.detect_objects(frame)
         person_pub.publish(person_msg)
+        rospy.loginfo('Published person_msg : ' + str(person_msg.data))
 
         # show the frame
-
         cv2.imshow("Frame", frame)
-
         key = cv2.waitKey(1) & 0xFF
-        #vis_util.xmax-xmin
 
         # if the `q` key was pressed, break from the loop
         if key == ord("q"):
