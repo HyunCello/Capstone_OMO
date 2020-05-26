@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Site-Enter" content="revealTrans(Duration=5.0,Transition=10)">
+    <meta http-equiv="Page-Enter" content="blendTrans(Duration=2.0)">
+
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
@@ -13,26 +16,37 @@
 </head>
 
 <body>
-    <div class="mainblock" style="margin-top: 5%;">
-        주문자 메뉴
+    <div class="mainblock" style="margin-top: 3%;">
+        먹을래요
     </div>
     <div class="mainblock_content" id="gotoorder">
+        <span style="display:inline-block;margin-top: 5.5%;">
+            주문해볼까
+        </span>
 
-        주문하기
-
-    </div>
-    <div class="mainblock_content" id="gotolock">
-
-        잠금 해제하기
-
-    </div>
-    <div class="mainblock_content" id="gotomap_robot">
-
-        실시간 로봇 위치
-
+        <img class="menuimg" src="../images/order.png" style="opacity: 0.95">
     </div>
 
-    <div class="mainblock" id="gotoindex">
+    <div class=" mainblock_content" id="gotolock">
+
+        <span style="display:inline-block;margin-top: 5.5%;">
+            문 열어볼까
+        </span>
+
+        <img class="menuimg" src="../images/unlock.png" style="opacity: 0.84">
+
+    </div>
+    <div class=" mainblock_content" id="gotomap_robot">
+
+        <span style="display:inline-block;margin-top: 5.5%;">
+            로봇이 어디있지
+        </span>
+
+        <img class="menuimg" src="../images/map_find.png" style="opacity: 0.82">
+
+    </div>
+
+    <div class=" mainblock" id="gotoindex">
 
         권한변경
 

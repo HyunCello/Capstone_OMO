@@ -34,29 +34,39 @@ main {
   color: rgba(255, 255, 255, 1);
   width: 92.3%;
   height: 6%;
-  background: rgba(255, 180, 2, 1);
+  background: rgba(255, 186, 5, 1);
   text-align: center;
   vertical-align: middle;
   display: inline-table;
   border-radius: 30px;
-  box-shadow: 10px 10px 10px 10px rgba(255, 210, 0, 0.4) inset;
+  box-shadow: -0.1em -0.1em 0.1em 0.1em rgba(129, 106, 3, 0.2) inset;
 }
 .mainblock_content {
-  padding-top: 9.7%;
-  padding-bottom: 9.7%;
+  padding-top: 5.4%;
+  padding-bottom: 5.4%;
+  padding-left: 7%;
   margin-top: 1.7%;
   margin-bottom: 1.7%;
   margin-left: auto;
   margin-right: auto;
-  align-items: center;
-  font-size: 2em;
+  font-size: 2.643em;
+  font-weight: 100;
   width: 92.3%;
-  height: 6%;
-  background: rgba(63, 140, 228, 0.2);
-  text-align: center;
-  vertical-align: middle;
+  height: 2%;
+  text-align: left;
   display: inline-table;
   border-radius: 30px;
+  border: 2px solid rgba(244, 156, 2, 0.1);
+  box-sizing: border-box;
+  box-shadow: -0.2em -0.2em 0.2em 0.2em rgba(255, 210, 0, 0.3) inset;
+}
+.menuimg {
+  width: 22%;
+  padding-right: 7%;
+  text-align: right;
+  display: inline-table;
+  float: right;
+  vertical-align: text-top;
 }
 
 .subblock {
@@ -103,18 +113,23 @@ main {
   font-weight: 100;
   color: rgba(0, 0, 0, 0.75);
   width: 44.5%;
-  height: 33.31%;
+  height: 33%;
   text-align: center;
   display: inline-table;
   vertical-align: middle;
-  border-radius: 15%;
+  border-radius: 10%;
   border: 2px solid rgba(244, 156, 2, 0.1);
   box-sizing: border-box;
   box-shadow: -0.2em -0.2em 0.2em 0.2em rgba(255, 210, 0, 0.3) inset;
+  transition: 0.2s;
 }
+.verticalblock:hover {
+  opacity: 0.5;
+}
+
 .subshortblock {
-  padding-top: 11%;
-  padding-bottom: 11%;
+  padding-top: 3.76%;
+  padding-bottom: 3.76%;
   margin-top: 1.7%;
   margin-bottom: 1.7%;
   margin-left: 1.4%;
@@ -122,9 +137,14 @@ main {
   align-items: center;
   font-size: 1.4em;
   width: 28.5%;
-  background: rgba(117, 177, 216, 0.2);
   text-align: center;
   display: inline-block;
   vertical-align: middle;
   border-radius: 40px;
+  box-sizing: border-box;
+  box-shadow: -0.2em -0.2em 0.2em 0.2em rgba(255, 210, 0, 0.3) inset;
+  transition: 0.5s;
+}
+.subshortblock:hover {
+  opacity: 0.5;
 }

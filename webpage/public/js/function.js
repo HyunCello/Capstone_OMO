@@ -3,23 +3,42 @@ $(document).ready(function () {
     location.href = "../index.html";
   });
   $("#gotoorderer").on("click", function () {
-    location.href = "html/orderer.html";
+    setTimeout(function () {
+      console.log("sda");
+      location.href = "html/orderer.html";
+    }, 100);
   });
-  $("#gotoorderer2").on("click", function () {
-    location.href = "orderer.html";
+  $("#gotomaker").on("click", function () {
+    setTimeout(function () {
+      console.log("sda");
+      location.href = "html/maker.html";
+    }, 100);
   });
   $("#gotoseller").on("click", function () {
-    location.href = "html/seller.html";
+    setTimeout(function () {
+      console.log("sda");
+      location.href = "html/seller.html";
+    }, 100);
   });
+  $("#gotomap").on("click", function () {
+    setTimeout(function () {
+      console.log("sda");
+      location.href = "html/map_justsee.html";
+    }, 100);
+  });
+
+  $("#gotoorderer2").on("click", function () {
+    setInterval(500);
+    location.href = "orderer.html";
+  });
+
   $("#gotoorder").on("click", function () {
     location.href = "order.html";
   });
   $("#gotoorderlist").on("click", function () {
     location.href = "orderlist.html";
   });
-  $("#gotomap").on("click", function () {
-    location.href = "html/map_justsee.html";
-  });
+
   $("#gotomap_robot").on("click", function () {
     location.href = "robotmap.html";
   });
@@ -29,9 +48,7 @@ $(document).ready(function () {
   $("#gotolock").on("click", function () {
     location.href = "lock.html";
   });
-  $("#gotomaker").on("click", function () {
-    location.href = "html/maker.html";
-  });
+
   $("#goback").on("click", function () {
     history.go(-1);
     location.reload;
