@@ -102,5 +102,5 @@ function deletemenu(key) {
   var dbTestRef3 = database.ref("test/" + key).remove();
   console.log(key);
   alert("처리되었습니다");
-  location.href = "seller.html";
+  //location.href = "seller.html";
 }
