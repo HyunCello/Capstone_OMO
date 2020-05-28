@@ -56,13 +56,47 @@
         }
     </style>
 
-    <div id="map" style="width:100%;height:60%;"></div>
 
-    <div class="mainblock" id="goback">
 
-        뒤로 가기
+
+
+    <div class="mainblock" style="margin-top: 3%;">
+
+        장소를 선택해볼까
+    </div>
+
+    <div id="modal">
+        <div class="modal_content">
+            <h2>모달 창</h2>
+            <p> 모달 창입니다</p>
+            <button type="button" id="modal_close_btn">모달 창 닫기</button>
+        </div>
+        <div class="modal_layer"></div>
 
     </div>
+
+
+    <div id="map" style="width:92%;height:69.4%;margin-left: auto;margin-right: auto;"></div>
+
+
+    <div id="modal_open_btn">선택하기</div>
+    <div class="mainblock" id="goback">
+
+        다른거 먹을래
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
         var zoomsize
@@ -82,16 +116,19 @@
             map: map
         });
         var circle1 = new naver.maps.Circle({
-            strokeColor: '#0000ff',
+            strokeColor: '#ffd200',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#0000ff',
-            fillOpacity: 0.35,
+            fillColor: '#ffd200',
+            fillOpacity: 0.5,
             center: new naver.maps.LatLng(37.297567, 126.836710),
-            radius: 5,
+            radius: 10,
             zIndex: 100,
             clickable: true,
             map: map
+        });
+        $("#menu1").on("click", function () {
+            addmenu(name, 1)
         });
         /*
         var marker = new naver.maps.Marker({ // 1공 교차로내부
@@ -115,13 +152,13 @@
             map: map
         });
         var circle2 = new naver.maps.Circle({
-            strokeColor: '#0000ff',
+            strokeColor: '#ffd200',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#0000ff',
-            fillOpacity: 0.35,
+            fillColor: '#ffd200',
+            fillOpacity: 0.5,
             center: new naver.maps.LatLng(37.297200, 126.836260),
-            radius: 5,
+            radius: 10,
             zIndex: 100,
             clickable: true,
             map: map
@@ -131,13 +168,13 @@
             map: map
         });
         var circle3 = new naver.maps.Circle({
-            strokeColor: '#0000ff',
+            strokeColor: '#ffd200',
             strokeOpacity: 0.8,
             strokeWeight: 2,
-            fillColor: '#0000ff',
-            fillOpacity: 0.35,
+            fillColor: '#ffd200',
+            fillOpacity: 0.5,
             center: new naver.maps.LatLng(37.2968655, 126.8368147),
-            radius: 5,
+            radius: 10,
             zIndex: 100,
             clickable: true,
             map: map
@@ -210,8 +247,10 @@
         //////////////////////////////////////////////////////////////////
 
         var onegongthreegong = [
-            '<div class="iw_inner" >',
-            '   <h3>1공과 3공 사이</h3>',
+
+            '<div class="iw_inner">',
+            ' <h3>1공과 3공 사이</h3>',
+            '<div>선택하시려면 다시 눌러주세요</div>',
             '</div>'
         ].join('');
 
@@ -221,7 +260,7 @@
 
         var bythethreegong = [
             '<div class="iw_inner">',
-            '   <h3>   3공   </h3>',
+            ' <h3> 3공 </h3>',
             '</div>'
         ].join('');
 
@@ -231,7 +270,7 @@
 
         var bythefivegong = [
             '<div class="iw_inner">',
-            '   <h3>   5공   </h3>',
+            ' <h3> 5공 </h3>',
             '</div>'
         ].join('');
 
@@ -243,21 +282,21 @@
 
 
 
-
         ////////////////////////포인터 설정////////////////////////////////////
 
+        // naver.maps.Event.addListener(circle1, "mouseover", function (e) {
+        //     map.setCursor("pointer");
+        //     if (onegong.getMap()) {
+        //     } else {
+        //         onegong.open(map, marker1);
+        //     }
+        //     circle1.setOptions({
+        //         fillOpacity: 0.8
+        //     });
 
-        naver.maps.Event.addListener(circle1, "mouseover", function (e) {
-            map.setCursor("pointer");
-            if (onegong.getMap()) {
-            } else {
-                onegong.open(map, marker1);
-            }
-            circle1.setOptions({
-                fillOpacity: 0.8
-            });
+        // });
 
-        });
+
         naver.maps.Event.addListener(circle1, "click", function (e) {
             map.setCursor("pointer");
             if (onegong.getMap()) {
@@ -267,29 +306,44 @@
             circle1.setOptions({
                 fillOpacity: 0.5
             });
-            addmenu(name, "1")
-            location.href = "orderer.html";
-        });
-
-        naver.maps.Event.addListener(circle1, "mouseout", function (e) {
-            map.setCursor("auto");
-            onegong.close();
-
-            circle1.setOptions({
-                fillOpacity: 0.35
+            console.log("asdas")
+            naver.maps.Event.addListener(circle1, "click", function (e) {
+                map.setCursor("pointer");
+                if (onegong.getMap()) {
+                } else {
+                    onegong.open(map, marker1);
+                }
+                circle1.setOptions({
+                    fillOpacity: 0.5
+                });
+                console.log("asdadadasdasd")
+                addmenu(name, "1")
+                modalopen()
+                //location.href = "orderer.html";
             });
+            // addmenu(name, "1")
+            // location.href = "orderer.html";
         });
+
+        // naver.maps.Event.addListener(circle1, "mouseout", function (e) {
+        // map.setCursor("auto");
+        // onegong.close();
+
+        // circle1.setOptions({
+        // fillOpacity: 0.35
+        // });
+        // });
         /////////////////////////////////////
-        naver.maps.Event.addListener(circle2, "mouseover", function (e) {
-            map.setCursor("pointer");
-            if (threegong.getMap()) {
-            } else {
-                threegong.open(map, marker2);
-            }
-            circle2.setOptions({
-                fillOpacity: 0.8
-            });
-        });
+        // naver.maps.Event.addListener(circle2, "mouseover", function (e) {
+        //     map.setCursor("pointer");
+        //     if (threegong.getMap()) {
+        //     } else {
+        //         threegong.open(map, marker2);
+        //     }
+        //     circle2.setOptions({
+        //         fillOpacity: 0.8
+        //     });
+        // });
         naver.maps.Event.addListener(circle2, "click", function (e) {
             map.setCursor("pointer");
             if (threegong.getMap()) {
@@ -299,27 +353,39 @@
             circle1.setOptions({
                 fillOpacity: 0.5
             });
-            addmenu(name, "2")
-            location.href = "orderer.html";
-        });
-        naver.maps.Event.addListener(circle2, "mouseout", function (e) {
-            map.setCursor("auto");
-            threegong.close();
-            circle2.setOptions({
-                fillOpacity: 0.35
+            naver.maps.Event.addListener(circle2, "click", function (e) {
+                map.setCursor("pointer");
+                if (threegong.getMap()) {
+                } else {
+                    threegong.open(map, marker2);
+                }
+                circle1.setOptions({
+                    fillOpacity: 0.5
+                });
+                addmenu(name, "2")
+                modalopen()
             });
+            // addmenu(name, "2")
+            // location.href = "orderer.html";
         });
+        // naver.maps.Event.addListener(circle2, "mouseout", function (e) {
+        //     map.setCursor("auto");
+        //     threegong.close();
+        //     circle2.setOptions({
+        //         fillOpacity: 0.35
+        //     });
+        // });
         ///////////////////////////////////////////////////
-        naver.maps.Event.addListener(circle3, "mouseover", function (e) {
-            map.setCursor("pointer");
-            if (fivegong.getMap()) {
-            } else {
-                fivegong.open(map, marker3);
-            }
-            circle3.setOptions({
-                fillOpacity: 0.8
-            });
-        });
+        // naver.maps.Event.addListener(circle3, "mouseover", function (e) {
+        //     map.setCursor("pointer");
+        //     if (fivegong.getMap()) {
+        //     } else {
+        //         fivegong.open(map, marker3);
+        //     }
+        //     circle3.setOptions({
+        //         fillOpacity: 0.8
+        //     });
+        // });
         naver.maps.Event.addListener(circle3, "click", function (e) {
             map.setCursor("pointer");
             if (fivegong.getMap()) {
@@ -329,21 +395,41 @@
             circle1.setOptions({
                 fillOpacity: 0.5
             });
-            addmenu(name, "3")
-            location.href = "orderer.html";
-        });
-        naver.maps.Event.addListener(circle3, "mouseout", function (e) {
-            map.setCursor("auto");
-            fivegong.close();
-            circle3.setOptions({
-                fillOpacity: 0.35
+            naver.maps.Event.addListener(circle3, "click", function (e) {
+                map.setCursor("pointer");
+                if (fivegong.getMap()) {
+                } else {
+                    fivegong.open(map, marker3);
+                }
+                circle1.setOptions({
+                    fillOpacity: 0.5
+                });
+                addmenu(name, "3")
+                modalopen()
             });
+            // addmenu(name, "3")
+            // location.href = "orderer.html";
         });
+        // naver.maps.Event.addListener(circle3, "mouseout", function (e) {
+        //     map.setCursor("auto");
+        //     fivegong.close();
+        //     circle3.setOptions({
+        //         fillOpacity: 0.35
+        //     });
+        // });
 
+        // naver.maps.Event.addListener(onegong, "mouseover", function (e) {
+        //     console.log("제발")
+        //     map.setCursor("pointer");
+        //     $("#menu1").on("click", function () {
+        //         addmenu(name, 1)
+        //     });
+        // });
+    /////////////////////////////////////////////////////////////
 
-        /////////////////////////////////////////////////////////////
-        console.log(name)
     </script>
+
+
 
 </body>
 <script type="text/javascript" src="../js/function.js"></script>
