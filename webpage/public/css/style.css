@@ -1,6 +1,6 @@
 @font-face {
   font-family: "NotoSans";
-  src: url(../fonts/NotoSansCJKkr-thin.otf);
+  src: url(../fonts/NotoSansCJKkr-Thin.otf);
 }
 html,
 body {
@@ -31,6 +31,7 @@ main {
   margin-right: auto;
   align-items: center;
   font-size: 2.5em;
+  font-family: Helvetica, sans-serif;
   color: rgba(255, 255, 255, 1);
   width: 92.3%;
   height: 6%;
@@ -59,6 +60,10 @@ main {
   border: 2px solid rgba(244, 156, 2, 0.1);
   box-sizing: border-box;
   box-shadow: -0.2em -0.2em 0.2em 0.2em rgba(255, 210, 0, 0.3) inset;
+  transition: 0.2s;
+}
+.mainblock_content:hover {
+  opacity: 0.5;
 }
 .menuimg {
   width: 22%;

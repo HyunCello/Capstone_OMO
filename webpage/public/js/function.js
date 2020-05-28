@@ -6,25 +6,24 @@ $(document).ready(function () {
     setTimeout(function () {
       console.log("sda");
       location.href = "html/orderer.html";
-    }, 100);
+    }, 150);
   });
   $("#gotomaker").on("click", function () {
     setTimeout(function () {
       console.log("sda");
       location.href = "html/maker.html";
-    }, 100);
+    }, 150);
   });
   $("#gotoseller").on("click", function () {
     setTimeout(function () {
       console.log("sda");
       location.href = "html/seller.html";
-    }, 100);
+    }, 150);
   });
   $("#gotomap").on("click", function () {
     setTimeout(function () {
-      console.log("sda");
       location.href = "html/map_justsee.html";
-    }, 100);
+    }, 150);
   });
 
   $("#gotoorderer2").on("click", function () {
@@ -33,7 +32,9 @@ $(document).ready(function () {
   });
 
   $("#gotoorder").on("click", function () {
-    location.href = "order.html";
+    setTimeout(function () {
+      location.href = "order.html";
+    }, 150);
   });
   $("#gotoorderlist").on("click", function () {
     location.href = "orderlist.html";
