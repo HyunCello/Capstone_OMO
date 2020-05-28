@@ -23,20 +23,7 @@
 
     </div>
 
-    <br />
-    <input type="button" value="추가" onclick="add_div()"><br />
-    <div id="room_type">
-        <!--
-        <div onclick="remove_div(this)">
-            완료
-        </div>
--->
 
-        <div onclick="bb(this)">
-            주문 처리
-        </div>
-
-    </div>
 
     <div id="field"></div>
 
@@ -54,43 +41,33 @@
         var place = []
         var key = []
 
-        var dbTestRef = database.ref('test/')
+        let dbTestRef = database.ref('test/')
+        window.onload = function () {
 
-        function initdatabase() {
+            let orderedList = []
+
             dbTestRef.on('child_added', function (data) {
-                names.push(data.val().name)
-                place.push(data.val().location)
-                key.push(data.key)
+                orderedList.push({
+                    "key": data.key,
+                    "name": data.val().name,
+                    "location": data.val().location
+                })
 
-
-                console.log(names)
-                console.log(place)
-                console.log(key)
-            })
-        }
-
-        setTimeout(function creatediv() {
-            console.log("실행됨")
-            for (var i = 0; i < names.length; i++) {
                 var div = document.createElement('div');
                 var div2 = document.createElement('div');
+                var div3 = document.createElement('div');
+
                 div.className = "subblock";
-                div.innerHTML = names[i];
+                div.innerHTML = data.val().name + "   /   " + data.val().location + "공"
+                div3.className = "subblock"
+                div3.innerHTML = data.val().location + "공"
                 div2.className = "buttonblock"
-
-
-                //div2.innerHTML = document.getElementById('room_type').innerHTML;
-                //###################지금 lock2로 가고있음#######################
-                div2.innerHTML = `<div onclick="location.href='lock.html?${key[i]}'">주문처리</div>`
+                div2.innerHTML = `<div onclick="location.href='lock.html?${data.key}'">주문처리</div>`;
                 document.getElementById('field').appendChild(div);
                 document.getElementById('field').appendChild(div2);
                 console.log("creatediv")
-            }
-            console.log("ㅠㅠ")
-            console.log(names)
+            })
         }
-            , 6000
-        )
 
         function remove_div(obj) {
             document.getElementById('field').removeChild(obj.parentNode.previousSibling);

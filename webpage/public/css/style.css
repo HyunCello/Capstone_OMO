@@ -85,11 +85,15 @@ main {
   font-size: 1.4em;
   width: 60%;
   height: 7%;
-  background: rgba(117, 177, 216, 0.2);
   text-align: center;
   display: inline-table;
   vertical-align: middle;
+  border-radius: 30px;
+  border: 2px solid rgba(244, 156, 2, 0.1);
+  box-sizing: border-box;
+  box-shadow: -0.2em -0.2em 0.2em 0.2em rgba(255, 210, 0, 0.3) inset;
 }
+
 .buttonblock {
   padding-top: 5%;
   padding-bottom: 5%;
@@ -141,7 +145,7 @@ main {
   margin-right: 1.4%;
   align-items: center;
   font-size: 1.4em;
-  width: 28.5%;
+  width: 26.5%;
   text-align: center;
   display: inline-block;
   vertical-align: middle;
@@ -170,12 +174,12 @@ main {
 
 #modal button {
   display: inline-block;
-  width: 100px;
+  width: 150px;
   margin-left: calc(100% - 100px - 10px);
 }
 
 #modal .modal_content {
-  width: 300px;
+  width: 40%;
   margin: 100px auto;
   padding: 20px 10px;
   background: #fff;

@@ -67,9 +67,8 @@
 
     <div id="modal">
         <div class="modal_content">
-            <h2>모달 창</h2>
-            <p> 모달 창입니다</p>
-            <p id="modal_close_btn">모달 창 닫기</p>
+            <h2>주문되었습니다!</h2>
+            <p id="modal_close_btn">창 닫기</p>
         </div>
         <div class="modal_layer"></div>
 
@@ -78,9 +77,7 @@
 
     <div id="map" style="width:92%;height:69.4%;margin-left: auto;margin-right: auto;"></div>
 
-
-    <div id="modal_open_btn">선택하기</div>
-    <div class="mainblock" id="goback">
+    <div class="mainblock" id="gotoorder">
 
         다른거 먹을래
 
@@ -261,6 +258,7 @@
         var bythethreegong = [
             '<div class="iw_inner">',
             ' <h3> 3공 </h3>',
+            '<div>선택하시려면 다시 눌러주세요</div>',
             '</div>'
         ].join('');
 
@@ -271,6 +269,7 @@
         var bythefivegong = [
             '<div class="iw_inner">',
             ' <h3> 5공 </h3>',
+            '<div>선택하시려면 다시 눌러주세요</div>',
             '</div>'
         ].join('');
 
@@ -362,7 +361,7 @@
                 circle1.setOptions({
                     fillOpacity: 0.5
                 });
-                addmenu(name, "2")
+                addmenu(name, "3")
                 modalopen()
             });
             // addmenu(name, "2")
@@ -404,7 +403,7 @@
                 circle1.setOptions({
                     fillOpacity: 0.5
                 });
-                addmenu(name, "3")
+                addmenu(name, "5")
                 modalopen()
             });
             // addmenu(name, "3")
