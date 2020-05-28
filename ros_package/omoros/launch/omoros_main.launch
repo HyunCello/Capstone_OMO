@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- Launch omoros_navigation -->
+  <!--<include file="$(find omoros)/launch/omoros_navigation.launch" /> -->
+
+  <!-- Main Code -->
+  <node pkg="omoros" type="dalsu_main.py" name="dalsu_main"/>
+  
+  <!-- AMCL -->
+  <node pkg="object_detection" type="person_detection.py" name="person_detection"/>
+
+</launch>

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>hail</name>
+  <name>object_detection</name>
   <version>0.0.0</version>
-  <description>The hail package</description>
+  <description>Object and  package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->

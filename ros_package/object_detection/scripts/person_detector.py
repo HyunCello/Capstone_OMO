@@ -35,7 +35,7 @@ class ObjectDetector():
                 tar_file.extract(file, os.getcwd())
                 print(self.graph_file, "is extracted")
 
-    def __init__(self, model_name, label_file='/home/kyp/catkin_ws/src/object_detection/scripts/data/mscoco_label_map.pbtxt'):
+    def __init__(self, model_name, label_file='/home/jeremykim/catkin_ws/src/object_detection/scripts/data/mscoco_label_map.pbtxt'):
         # Initialize some variables
         print("ObjectDetector('%s', '%s')" % (model_name, label_file))
         self.process_this_frame = True
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     import camera
     from object_detection.utils import visualization_utils as vis_util
 
-    detector = ObjectDetector('/home/kyp/catkin_ws/src/object_detection/scripts/ssd_mobilenet_v1_coco_2017_11_17')
+    detector = ObjectDetector('/home/jeremykim/catkin_ws/src/object_detection/scripts/ssd_mobilenet_v1_coco_2017_11_17')
     person_pub = rospy.Publisher('personDetected', Int32, queue_size=1)
     rospy.init_node('person_detect', anonymous=False)
     rate = rospy.Rate(10)
