@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-######## last update : 20.05.21 18:00 by kyp
 import rospy
 from std_msgs.msg import Int32
 from geometry_msgs.msg import PoseStamped

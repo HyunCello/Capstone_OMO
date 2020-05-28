@@ -130,7 +130,6 @@ class ObjectDetector():
         return False
 
     def detect_objects(self, frame):
-        time1 = time.time()
         # Grab a single frame of video
 
         # Resize frame of video to 1/4 size for faster face recognition processing
@@ -140,13 +139,9 @@ class ObjectDetector():
         # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
         rgb_small_frame = small_frame[:, :, ::-1]
 
-        time2 = time.time()
-
         # Only process every other frame of video to save time
         if self.time_to_run_inference():
             self.output_dict = self.run_inference(rgb_small_frame)
-
-        time3 = time.time()
 
         vis_util.visualize_boxes_and_labels_on_image_array(
           frame,
@@ -161,25 +156,11 @@ class ObjectDetector():
         )
         
         classes = self.output_dict['detection_classes']
-        topic_msg = 0
+        person_prob = np.count_nonzero(classes == 1)
 
+        print('person_prob : ', person_prob)
 
-        print('1 - ', classes)
-        print('2 - ', np.array(classes))
-
-
-        time4 = time.time()
-
-        #print("%0.1f, %0.1f, %0.1f sec" % (time2 - time1, time3 - time2, time4 - time3))
-        return frame, topic_msg
-
-    def get_jpg_bytes(self):
-        frame = self.get_frame()
-        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
-        # so we must encode it into JPEG in order to correctly display the
-        # video stream.
-        ret, jpg = cv2.imencode('.jpg', frame)
-        return jpg.tobytes()
+        return frame, person_prob
 
 
 if __name__ == '__main__':
@@ -203,7 +184,13 @@ if __name__ == '__main__':
         frame = cam.get_frame()
         person_msg = Int32()
 
-        frame, person_msg.data = detector.detect_objects(frame)
+        frame, person_prob = detector.detect_objects(frame)
+
+        if person_prob > 60:
+            person_msg.data = 1
+        else:
+            person_msg.data = 0
+
         person_pub.publish(person_msg)
         rospy.loginfo('Published person_msg : ' + str(person_msg.data))
 
