@@ -55,6 +55,21 @@
         4번
 
     </div>
+    <div class="subblock" onclick="robot_pos(1)">
+
+        1공
+
+    </div>
+    <div class="subblock" onclick="robot_pos(3)">
+
+        3공
+
+    </div>
+    <div class="subblock" onclick="robot_pos(5)">
+
+        5공
+
+    </div>
     <div class="subblock" id="modal_open_btn">
 
         모달 창 열기
@@ -193,6 +208,37 @@
             console.log("Publishing cmd_vel");
             robot.publish(message_status);
         }
+
+        function robot_pos(status) {
+            console.log("sada")
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var robot = new ROSLIB.Topic({
+                ros: ros,
+                name: '/goalPos',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var message_status = new ROSLIB.Message({
+                data: status
+            });
+            console.log("Publishing goalposition");
+            robot.publish(message_status);
+        }
+
     </script>
 </body>
 <script type="text/javascript" src="../js/function.js"></script>
