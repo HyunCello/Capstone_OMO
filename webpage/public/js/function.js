@@ -8,6 +8,12 @@ $(document).ready(function () {
       location.href = "html/orderer.html";
     }, 150);
   });
+  $("#gotocontrol").on("click", function () {
+    setTimeout(function () {
+      console.log("sda");
+      location.href = "html/control.html";
+    }, 150);
+  });
   $("#gotomaker").on("click", function () {
     setTimeout(function () {
       console.log("sda");

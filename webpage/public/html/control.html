@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <title>템플릿</title>
+
+</head>
+
+<body>
+    <style>
+        .subblcok {
+            width: 20%;
+        }
+    </style>
+
+    <div class="mainblock">
+
+        메인 블록
+
+
+    </div>
+    <div class="subblock" onclick="opendoor()">
+
+        문열기
+
+    </div>
+    <div class="subblock" onclick="closedoor()">
+
+        문닫기
+
+    </div>
+    <div class="subblock" onclick="robot_status(1)">
+
+        1번
+
+    </div>
+    <div class="subblock" onclick="robot_status(2)">
+
+        2번
+
+    </div>
+    <div class="subblock" onclick="robot_status(3)">
+
+        3번
+
+    </div>
+    <div class="subblock" onclick="robot_status(4)">
+
+        4번
+
+    </div>
+    <div class="subblock" id="modal_open_btn">
+
+        모달 창 열기
+
+    </div>
+    <div class=" mainblock" id="gotoindex">
+
+        권한변경
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript" type="text/javascript">
+        // Connecting to ROS
+        // -----------------
+
+        function opendoor() {
+            console.log("sada")
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var opendoor = new ROSLIB.Topic({
+                ros: ros,
+                name: '/doorstatus',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var open = new ROSLIB.Message({
+                data: 1
+            });
+            console.log("Publishing cmd_vel");
+            opendoor.publish(open);
+        }
+        function closedoor() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+
+            var opendoor = new ROSLIB.Topic({
+                ros: ros,
+                name: '/doorstatus',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var open = new ROSLIB.Message({
+                data: 2
+            });
+            console.log("Publishing cmd_vel");
+            opendoor.publish(open);
+        }
+        console.log(window.location.href)
+        var str = window.location.href
+        var dbname = str.substr(str.indexOf("?") + 1)
+
+        function robot_status(status) {
+            console.log("sada")
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var robot = new ROSLIB.Topic({
+                ros: ros,
+                name: '/robotstatus',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var message_status = new ROSLIB.Message({
+                data: status
+            });
+            console.log("Publishing cmd_vel");
+            robot.publish(message_status);
+        }
+    </script>
+</body>
+<script type="text/javascript" src="../js/function.js"></script>
+
+</html>
