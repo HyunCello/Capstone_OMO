@@ -117,10 +117,10 @@ class Robot:
    exp = 0.3            # Joystick expo setting
    if param_joy_en == 1:
       isAutoMode = False
-      print("In Manual mode")
+      print "In Manual mode"
    else :
       isAutoMode = True
-      print("In Auto mode")
+      print "In Auto mode"
    isArrowMode = False  # Whether to control robo with arrow key or not
    arrowCon = ArrowCon
    
@@ -482,7 +482,7 @@ class Robot:
       Vth = twist.twist.angular.z
       odom_quat = quaternion_from_euler(0,0,pose.theta)
       self.odom_broadcaster.sendTransform((pose.x,pose.y,0.),odom_quat,now,'base_link','odom')
-      # self.odom_broadcaster.sendTransform((pose.x,pose.y,0.),odom_quat,now,'base_footprint','odom')
+      #self.odom_broadcaster.sendTransform((pose.x,pose.y,0.),odom_quat,now,'base_footprint','odom')
       
       odom = Odometry()
       odom.header.stamp = now
@@ -560,5 +560,3 @@ if __name__ == '__main__':
       Robot()
    except rospy.ROSInterruptException:
       pass
-    
-

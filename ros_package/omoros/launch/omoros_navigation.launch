@@ -10,9 +10,6 @@
   <!-- Launch ydlidar 
   <include file="$(find ydlidar_ros)/launch/G6.launch" />   -->
 
-  <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" 
-        args="0.0 0.0 0.2 0.0 0.0 0.0 /base_link /laser_frame 40" /> -->
-
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
   

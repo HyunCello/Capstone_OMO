@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
 
 <launch>
-
   <!-- Launch omoros_navigation -->
   <include file="$(find omoros)/launch/omoros_navigation.launch" />
 
   <!-- Main Code -->
   <node pkg="omoros" type="dalsu_main.py" name="dalsu_main"/>
   
-  <!-- Launch person_detector --> 
+  <!-- Launch person_detector 
   <include file="$(find object_detection)/launch/person_detect.launch" /> -->
 
   <!-- Launch web rosbridge server --> 
-  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" /> -->
-
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" /> 
+  
 </launch>
