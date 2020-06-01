@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <node pkg="object_detection" type="person_detector.py" name="person_detector"/>
+
+</launch>

@@ -43,10 +43,12 @@
       <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_link" 
             args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /gps_link 10" />  -->
 
-      <!--
       <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
-            args="0.0 0.0 0.0 0 0 0.0 /map /odom 40" />
+            args="0.0 0.0 0.2 0.0 0.0 0.0 /map /odom 40" /> <!--
+      <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" 
+            args="0.0 0.0 0.2 0.0 0.0 0.0 /odom /base_link 40" />  -->
 
+      <!--
       <node pkg="tf" type="static_transform_publisher" name="base_link_to_wheel_left_link" 
             args="0.0  0.29 0.11 0.0 0.0 0.0 /base_link /wheel_left_link 40" />
 
@@ -55,7 +57,7 @@
       <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
          <param name="publish_frequency" type="double" value="50.0" />
          <param name="tf_prefix" value="$(arg multi_robot_name)"/>
-      </node>-->
+      </node> -->
 
       <group if="$(eval arg('set_run_rviz')==1)">
          <node pkg="rviz" type="rviz" name="rviz" args="-d $(find omoros)/r1_description/rviz/model.rviz"/>

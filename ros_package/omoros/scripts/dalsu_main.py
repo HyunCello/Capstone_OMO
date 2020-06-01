@@ -19,58 +19,121 @@ class GoalPublisher():
 
     def send_goal(self, goalNo):
         # in turtlebot
-        if goalNo == 0:
-            self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 0.2
-            self.msg.pose.position.y = 1.0
-            self.msg.pose.orientation.z = 0.7
-            self.msg.pose.orientation.w = 0.7
-        elif goalNo == 1:
-            self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 2.5
-            self.msg.pose.position.y = 1.1
-            self.msg.pose.orientation.z = -0.7
-            self.msg.pose.orientation.w = 0.7
-        elif goalNo == 10:
-            self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 0.2
-            self.msg.pose.position.y = 1.0
-            self.msg.pose.orientation.z = 1.0
-            self.msg.pose.orientation.w = 0.0
+        # if goalNo == 40:
+        #     self.msg.header.stamp = rospy.Time.now()
+        #     self.msg.pose.position.x = 0.2
+        #     self.msg.pose.position.y = 1.0
+        #     self.msg.pose.orientation.z = 0.7
+        #     self.msg.pose.orientation.w = 0.7
+        # elif goalNo == 41:
+        #     self.msg.header.stamp = rospy.Time.now()
+        #     self.msg.pose.position.x = 2.5
+        #     self.msg.pose.position.y = 1.1
+        #     self.msg.pose.orientation.z = -0.7
+        #     self.msg.pose.orientation.w = 0.7
+        # elif goalNo == 50:
+        #     self.msg.header.stamp = rospy.Time.now()
+        #     self.msg.pose.position.x = 0.2
+        #     self.msg.pose.position.y = 1.0
+        #     self.msg.pose.orientation.z = 1.0
+        #     self.msg.pose.orientation.w = 0.0
 
         # in dalsu
-        if goalNo == 0:
+        if goalNo == 0:  # to 1Engineering
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 1.3
-            self.msg.pose.position.y = -2.2
-            self.msg.pose.orientation.z = 0.05
-            self.msg.pose.orientation.w = 1.0
+            self.msg.pose.position.x = -1.8
+            self.msg.pose.position.y = -4.0
+            self.msg.pose.orientation.z = -0.7
+            self.msg.pose.orientation.w = 0.7
         elif goalNo == 1:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 4.0
-            self.msg.pose.position.y = -1.9
-            self.msg.pose.orientation.z = 0.74
-            self.msg.pose.orientation.w = 0.67
+            self.msg.pose.position.x = -1.7
+            self.msg.pose.position.y = -9.5
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
         elif goalNo == 2:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 3.35
-            self.msg.pose.position.y = 3.69
-            self.msg.pose.orientation.z = 1.0
-            self.msg.pose.orientation.w = -0.07
-        
-        if goalNo == 10:
-            self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = -0.17
-            self.msg.pose.position.y = 3.12
-            self.msg.pose.orientation.z = 0.09
+            self.msg.pose.position.x = 16.0
+            self.msg.pose.position.y = -8.5
+            self.msg.pose.orientation.z = 0.0
             self.msg.pose.orientation.w = 1.0
+
+        if goalNo == 10:  # to Home from 1Engineering
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -1.8
+            self.msg.pose.position.y = -4.0
+            self.msg.pose.orientation.z = -0.7
+            self.msg.pose.orientation.w = 0.7
         elif goalNo == 11:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = 3.0
-            self.msg.pose.position.y = 3.75
-            self.msg.pose.orientation.z = -0.65
-            self.msg.pose.orientation.w = 0.76
+            self.msg.pose.position.x = -1.7
+            self.msg.pose.position.y = -9.5
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
+        elif goalNo == 12:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 16.0
+            self.msg.pose.position.y = -8.5
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
+
+        if goalNo == 20:  # to 3Engineering
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -1.8
+            self.msg.pose.position.y = -4.0
+            self.msg.pose.orientation.z = -0.7
+            self.msg.pose.orientation.w = 0.7
+        elif goalNo == 21:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -1.7
+            self.msg.pose.position.y = -9.5
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
+        elif goalNo == 22:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 16.0
+            self.msg.pose.position.y = -8.5
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
         
+        if goalNo == 30:  # to Home from 3Engineering
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = 14.0
+            self.msg.pose.position.y = -8.5
+            self.msg.pose.orientation.z = 1.0
+            self.msg.pose.orientation.w = 0.0
+        elif goalNo == 31:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -0.5
+            self.msg.pose.position.y = -9.5
+            self.msg.pose.orientation.z = 1.0
+            self.msg.pose.orientation.w = 0.0
+        elif goalNo == 32:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -2.0
+            self.msg.pose.position.y = -5.5
+            self.msg.pose.orientation.z = 0.7
+            self.msg.pose.orientation.w = 0.7
+
+        if goalNo == 40:  # to 5Engineering
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -2.3
+            self.msg.pose.position.y = 4.5
+            self.msg.pose.orientation.z = 0.7
+            self.msg.pose.orientation.w = 0.7
+        elif goalNo == 41:
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -2.5
+            self.msg.pose.position.y = 26.2
+            self.msg.pose.orientation.z = 0.0
+            self.msg.pose.orientation.w = 1.0
+        
+        if goalNo == 50:  # to Home from 5Engineering
+            self.msg.header.stamp = rospy.Time.now()
+            self.msg.pose.position.x = -2.5
+            self.msg.pose.position.y = 20.3
+            self.msg.pose.orientation.z = -0.7
+            self.msg.pose.orientation.w = 0.7
 
         elif goalNo == 9999:  # home
             self.msg.header.stamp = rospy.Time.now()
@@ -122,6 +185,22 @@ class GoalPosSubscriber():
         self.pos_buf = msg.data
 
 
+class DoorStatusSubscriber():
+    def __init__(self):
+        self.door_sub = rospy.Subscriber("doorStatus", Int32, callback=self._callback)
+        self.door_buf = None
+    
+    def wait_door(self):
+        if self.door_buf == 3:
+            return True
+        else:
+            return False
+        self.door_buf = None
+    
+    def _callback(self, msg):
+        self.door_buf = msg.data
+
+
 class ResultSubscriber():
     def __init__(self):
         self.result_sub = rospy.Subscriber("move_base/result", MoveBaseActionResult, callback=self._callback)
@@ -144,6 +223,7 @@ def dalsu_main():
     goal_pub = GoalPublisher()
     stat_pub = StatePublisher()
     pos_sub = GoalPosSubscriber()
+    door_sub = DoorStatusSubscriber()
     result_sub = ResultSubscriber()
 
     # test_pub = rospy.Publisher("lock", Int32, queue_size=1)
@@ -162,6 +242,10 @@ def dalsu_main():
         while result_sub.wait_result() is False:
             dalsu_sleep(status)
 
+    def wait_closeDoor(status):
+        while door_sub.wait_door() is False:
+            dalsu_sleep(status)
+
     while not rospy.is_shutdown():
         goal_pos = pos_sub.wait_pos()
 
@@ -170,32 +254,78 @@ def dalsu_main():
             dalsu_sleep(status)
             continue
         
-        elif goal_pos == 0:  # GoToHome_test
+        elif goal_pos == 0:  # GoToHome_test (Emergency Return)
             status = 4
             goal_pub.send_goal(9999)
             wait_moving(status)
             status = 1
-            rospy.loginfo('Arrived at goal ' + str(goal_pos))
+            rospy.loginfo('Arrived at Home')
 
-        elif goal_pos == 1:
+        elif goal_pos == 1:  # 1st_Engineering
             status = 2
+            wait_closeDoor(status)
             goal_pub.send_goal(0)
             wait_moving(status)
             goal_pub.send_goal(1)
             wait_moving(status)
             goal_pub.send_goal(2)
             wait_moving(status)
-            rospy.loginfo('Arrived at goal ' + str(goal_pos))
+            rospy.loginfo('Arrived at Goal ' + str(goal_pos))
             status = 3
-
-        elif goal_pos == 2:
-            status = 2
+            wait_closeDoor(status)
+            status = 4
             goal_pub.send_goal(10)
             wait_moving(status)
             goal_pub.send_goal(11)
             wait_moving(status)
-            rospy.loginfo('Arrived at goal ' + str(goal_pos))
+            goal_pub.send_goal(12)
+            wait_moving(status)
+            goal_pub.send_goal(9999)
+            wait_moving(status)
+            status = 1
+            rospy.loginfo('Arrived at Home')
+
+        elif goal_pos == 3:  # 3rd_Engineering
+            status = 2
+            wait_closeDoor(status)
+            goal_pub.send_goal(20)
+            wait_moving(status)
+            goal_pub.send_goal(21)
+            wait_moving(status)
+            goal_pub.send_goal(22)
+            wait_moving(status)
+            rospy.loginfo('Arrived at Goal ' + str(goal_pos))
             status = 3
+            wait_closeDoor(status)
+            status = 4
+            goal_pub.send_goal(30)
+            wait_moving(status)
+            goal_pub.send_goal(31)
+            wait_moving(status)
+            goal_pub.send_goal(32)
+            wait_moving(status)
+            goal_pub.send_goal(9999)
+            wait_moving(status)
+            status = 1
+            rospy.loginfo('Arrived at Home')
+        
+        elif goal_pos == 5:  # 5th_Engineering
+            status = 2
+            wait_closeDoor(status)
+            goal_pub.send_goal(40)
+            wait_moving(status)
+            goal_pub.send_goal(41)
+            wait_moving(status)
+            rospy.loginfo('Arrived at Goal ' + str(goal_pos))
+            status = 3
+            wait_closeDoor(status)
+            status = 4
+            goal_pub.send_goal(50)
+            wait_moving(status)
+            goal_pub.send_goal(9999)
+            wait_moving(status)
+            status = 1
+            rospy.loginfo('Arrived at Home')
         ########## Arrive at Goal ##########
         
 

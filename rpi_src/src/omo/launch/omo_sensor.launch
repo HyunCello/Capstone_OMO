@@ -37,10 +37,10 @@
     <param name="samp_rate"    type="int"    value="9"/>
   </node>
 
-  <!-- create Door control node 
+  <!-- create Door control node --> 
   <node name="serial_node"        pkg="rosserial_python"      type="serial_node.py">
     <param name="port"              type="string"               value="/dev/ttyACM2"/>
     <param name="baud"              type="int"                  value="57600"/>
-  </node> -->
+  </node> 
 
 </launch>
