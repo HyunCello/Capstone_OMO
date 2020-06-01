@@ -263,6 +263,7 @@ def dalsu_main():
 
         elif goal_pos == 1:  # 1st_Engineering
             status = 2
+            wait_closeDoor(status)
             goal_pub.send_goal(0)
             wait_moving(status)
             goal_pub.send_goal(1)
@@ -286,6 +287,7 @@ def dalsu_main():
 
         elif goal_pos == 3:  # 3rd_Engineering
             status = 2
+            wait_closeDoor(status)
             goal_pub.send_goal(20)
             wait_moving(status)
             goal_pub.send_goal(21)
@@ -309,6 +311,7 @@ def dalsu_main():
         
         elif goal_pos == 5:  # 5th_Engineering
             status = 2
+            wait_closeDoor(status)
             goal_pub.send_goal(40)
             wait_moving(status)
             goal_pub.send_goal(41)

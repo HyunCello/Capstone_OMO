@@ -42,9 +42,9 @@
             args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /caster_back_right_link 10" />  
       <node pkg="tf" type="static_transform_publisher" name="base_link_to_gps_link" 
             args="0.0 -0.29 0.11 0.0 0.0 0.0 /base_link /gps_link 10" />  -->
-<!--
+
       <node pkg="tf" type="static_transform_publisher" name="map_to_odom" 
-            args="0.0 0.0 0.2 0.0 0.0 0.0 /map /odom 40" /> 
+            args="0.0 0.0 0.2 0.0 0.0 0.0 /map /odom 40" /> <!--
       <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" 
             args="0.0 0.0 0.2 0.0 0.0 0.0 /odom /base_link 40" />  -->
 
