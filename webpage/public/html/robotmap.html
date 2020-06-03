@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
     <script src="../js/menu.js"></script>
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
 
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
@@ -69,6 +72,86 @@
     </div>
 
     <script>
+        var robotposition = [37.29705, 126.836670]
+
+
+publish();
+
+
+function publish() {
+    var ros = new ROSLIB.Ros({
+        url: 'ws://172.20.10.2:9090'
+    });
+
+    ros.on('connection', function () {
+        console.log('Connected to websocket server.');
+    });
+
+    ros.on('error', function (error) {
+        console.log('Error connecting to websocket server: ', error);
+    });
+
+    ros.on('close', function () {
+        console.log('Connection to websocket server closed.');
+    });
+
+    var navinfo = new ROSLIB.Topic({
+        ros: ros,
+        name: '/gps',
+        messageType: 'sensor_msgs/NavSatFix'
+    });
+    navinfo.subscribe(function (msg) {
+
+        console.log('%s : %s', navinfo.name, msg.latitude);
+        robotposition[0] = msg.latitude
+        robotposition[1] = msg.longitude
+        var status = msg.data
+        console.log(robotposition)
+        var position_robot = new naver.maps.LatLng(robotposition[0], robotposition[1]);
+        var robot = { // 하수도
+            position: position_robot,
+            map: map,
+            icon: {
+                url: '../images/dalsu.png',
+            }
+        };
+        var marker = new naver.maps.Marker(robot);
+
+        navinfo.unsubscribe();
+
+    });
+
+
+
+
+    var robot_status = new ROSLIB.Topic({
+        ros: ros,
+        name: '/robotStatus',
+        messageType: 'std_msgs/Int32'
+    });
+    robot_status.subscribe(function (msg) {
+
+        console.log('%s : %s', robot_status.name, msg.data);
+        console.log("hi")
+
+
+        if (msg.data == 1) {
+            console.log(document.location.href.split('?')[1])
+            document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
+        }
+        else {
+            document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
+            console.log(status)
+        }
+
+        talker.unsubscribe();
+
+    });
+
+
+
+
+}
         var zoomsize
 
         if (window.innerWidth < 700) {
@@ -131,17 +214,8 @@
                 url: '../images/home.png',
             }
         };
-        var robotposition = [37.29705, 126.836670]
-        var position_robot = new naver.maps.LatLng(robotposition[0], robotposition[1]);
-        var robot = { // 하수도
-            position: position_robot,
-            map: map,
-            icon: {
-                url: '../images/dalsu.png',
-            }
-        };
+
         var marker = new naver.maps.Marker(homemarker);
-        var marker = new naver.maps.Marker(robot);
 
 
         var polyline1 = new naver.maps.Polyline({
@@ -193,88 +267,6 @@
         //////////////////////////////////////////////////////////////////
 
 
-
-
-
-        function publish() {
-            var ros = new ROSLIB.Ros({
-                url: 'ws://172.20.10.2:9090'
-            });
-
-            ros.on('connection', function () {
-                console.log('Connected to websocket server.');
-            });
-
-            ros.on('error', function (error) {
-                console.log('Error connecting to websocket server: ', error);
-            });
-
-            ros.on('close', function () {
-                console.log('Connection to websocket server closed.');
-            });
-
-            var navinfo = new ROSLIB.Topic({
-                ros: ros,
-                name: '/NavSatFix',
-                messageType: 'sensor_msgs/NavSatFix'
-            });
-            navinfo.subscribe(function (msg) {
-
-                console.log('%s : %s', talker.name, msg.data);
-                var status = msg.data
-                console.log("hi")
-
-
-                if (msg.data == 1) {
-                    console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
-                }
-                else {
-                    document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
-                    console.log(status)
-                }
-                talker.unsubscribe();
-
-            });
-
-
-
-
-
-
-
-
-
-
-
-            var robot_status = new ROSLIB.Topic({
-                ros: ros,
-                name: '/robotStatus',
-                messageType: 'std_msgs/Int32'
-            });
-            robot_status.subscribe(function (msg) {
-
-                console.log('%s : %s', robot_status.name, msg.data);
-                console.log("hi")
-
-
-                if (msg.data == 1) {
-                    console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
-                }
-                else {
-                    document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
-                    console.log(status)
-                }
-
-                talker.unsubscribe();
-
-            });
-
-
-
-
-        }
         setTimeout("history.go(0);", 2000);
     </script>
 
