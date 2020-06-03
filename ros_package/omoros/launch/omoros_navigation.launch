@@ -10,6 +10,9 @@
   <!-- Launch ydlidar 
   <include file="$(find ydlidar_ros)/launch/G6.launch" />   -->
 
+  <!-- Laserscan obstacle clearing filter 
+  <node pkg="omoros" type="scan_filter" name="scan_filter"/> -->
+
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
   

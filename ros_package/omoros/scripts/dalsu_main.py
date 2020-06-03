@@ -240,10 +240,11 @@ class DoorStatusSubscriber():
     
     def wait_door(self):
         if self.door_buf == 3:
+            self.door_buf = None
             return True
         else:
+            self.door_buf = None
             return False
-        self.door_buf = None
     
     def _callback(self, msg):
         self.door_buf = msg.data

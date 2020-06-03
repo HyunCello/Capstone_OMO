@@ -149,9 +149,9 @@ class Robot:
          print "**********"
          self.config.WIDTH = 0.591        # Apply vehicle width for R1 version
          self.config.WHEEL_R = 0.11       # Apply wheel radius for R1 version
-         self.config.WHEEL_MAXV = 1200.0  # Maximum speed can be applied to each wheel (mm/s)
-         self.config.V_Limit = 0.6        # Limited speed (m/s)
-         self.config.W_Limit = 0.1
+         self.config.WHEEL_MAXV = 2400.0  # Maximum speed can be applied to each wheel (mm/s)
+         self.config.V_Limit = 10.2       # Limited speed (m/s)
+         self.config.W_Limit = 0.25
          self.config.V_Limit_JOY = 0.25   # Limited speed for joystick control
          self.config.W_Limit_JOY = 0.05
          self.config.ArrowFwdStep = 250   # Steps move forward based on Odometry
@@ -365,7 +365,7 @@ class Robot:
       """ Set wheel speed from cmd message from auto navigation """
       if self.isAutoMode:
          #print "CMD_VEL: {:.2f} {:.2f} ".format(cmd.linear.x, cmd.angular.z)
-         cmdV = cmd.linear.x
+         cmdV = cmd.linear.x * 3.4
          cmdW = cmd.angular.z
          if cmdV>self.config.V_Limit:
             cmdV = self.config.V_Limit
