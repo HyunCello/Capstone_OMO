@@ -10,8 +10,6 @@
     <title>로봇 위치</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
     <script src="../js/menu.js"></script>
 
     <script type="text/javascript"
@@ -56,9 +54,15 @@
         }
     </style>
 
-    <div id="map" style="width:100%;height:50%;"></div>
+    <div class="mainblock" style="margin-top: 3%;">
 
-    <div class="mainblock" id="goback">
+        로봇 위치
+
+    </div>
+    <div id="map" style="width:92%;height:69.4%;margin-left: auto;margin-right: auto;border-radius: 30px;">
+    </div>
+
+    <div class="mainblock" id="gotoorderer2">
 
         뒤로 가기
 
@@ -127,7 +131,18 @@
                 url: '../images/home.png',
             }
         };
+        var robotposition = [37.29705, 126.836670]
+        var position_robot = new naver.maps.LatLng(robotposition[0], robotposition[1]);
+        var robot = { // 하수도
+            position: position_robot,
+            map: map,
+            icon: {
+                url: '../images/dalsu.png',
+            }
+        };
         var marker = new naver.maps.Marker(homemarker);
+        var marker = new naver.maps.Marker(robot);
+
 
         var polyline1 = new naver.maps.Polyline({
             map: map,
@@ -177,44 +192,13 @@
         });
         //////////////////////////////////////////////////////////////////
 
-        var onegongthreegong = [
-            '<div class="iw_inner" >',
-            '   <h3 onclick="addmenu(name,"5")">1공과 3공 사이</h3>',
-            '</div>'
-        ].join('');
-
-        var onegong = new naver.maps.InfoWindow({
-            content: onegongthreegong
-        });
-
-        var bythethreegong = [
-            '<div class="iw_inner">',
-            '   <h3>   3공   </h3>',
-            '</div>'
-        ].join('');
-
-        var threegong = new naver.maps.InfoWindow({
-            content: bythethreegong
-        });
-
-        var bythefivegong = [
-            '<div class="iw_inner">',
-            '   <h3>   5공   </h3>',
-            '</div>'
-        ].join('');
-
-        var fivegong = new naver.maps.InfoWindow({
-            content: bythefivegong
-        });
-
-
 
 
 
 
         function publish() {
             var ros = new ROSLIB.Ros({
-                url: 'ws://192.168.43.250:9090'
+                url: 'ws://172.20.10.2:9090'
             });
 
             ros.on('connection', function () {
@@ -231,17 +215,36 @@
 
             var navinfo = new ROSLIB.Topic({
                 ros: ros,
-                name: '/lock',
-                messageType: 'std_msgs/Int32'
+                name: '/NavSatFix',
+                messageType: 'sensor_msgs/NavSatFix'
             });
             navinfo.subscribe(function (msg) {
 
                 console.log('%s : %s', talker.name, msg.data);
                 var status = msg.data
                 console.log("hi")
+
+
+                if (msg.data == 1) {
+                    console.log(document.location.href.split('?')[1])
+                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
+                }
+                else {
+                    document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
+                    console.log(status)
+                }
                 talker.unsubscribe();
 
             });
+
+
+
+
+
+
+
+
+
 
 
             var robot_status = new ROSLIB.Topic({
@@ -253,14 +256,6 @@
 
                 console.log('%s : %s', robot_status.name, msg.data);
                 console.log("hi")
-                if (msg.data == 1) {
-                    console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus1").innerHTML = `<div onclick="opendoor()">잠금해제 가능 </div>`;
-                }
-                else {
-                    document.getElementById("robotstatus1").innerHTML = "잠금해제 불가";
-                    console.log(status)
-                }
 
 
                 if (msg.data == 1) {
@@ -277,9 +272,10 @@
             });
 
 
-            setTimeout("history.go(0);", 10000);
+
 
         }
+        setTimeout("history.go(0);", 2000);
     </script>
 
 </body>
