@@ -53,7 +53,7 @@ class GoalPublisher():
             self.msg.pose.orientation.w = 0.0
         elif goalNo == 2:
             self.msg.header.stamp = rospy.Time.now()
-            self.msg.pose.position.x = -24.65
+            self.msg.pose.position.x = -25.65
             self.msg.pose.position.y = -31.1
             self.msg.pose.orientation.z = 1.0
             self.msg.pose.orientation.w = 0.0
