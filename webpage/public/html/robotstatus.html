@@ -27,27 +27,44 @@
 
     <div class="mainblock">
 
-        문 열어볼까
+        어떤 상태일까
 
     </div>
 
 
-    <div class="subblock" style="height: 40%;padding-top: 4.7em;">
+    <div class="subblock">
 
-        문 열기
-        <br>
-        달수 앞에 서주세요
+        현재 로봇의 상태
 
     </div>
-    <div class="buttonblock" style="height: 40%;padding-top: 5em;" id="robotstatus">
+    <div class="buttonblock" id="robotstatus">
+
+        상태불명
+
+    </div>
+    <div class="subblock">
+
+        마지막 목표 지점
+
+    </div>
+    <div class="buttonblock" id="robotgoal">
+
+        상태불명
+
+    </div>
+    <div class="subblock">
+
+        GPS 수신 여부
+
+    </div>
+    <div class="buttonblock" id="robotgps">
 
         상태불명
 
     </div>
 
 
-
-    <div class="mainblock" id="gotoorderer2">
+    <div class="mainblock" id="gotoseller2">
 
         뒤로 가기
 
@@ -98,25 +115,81 @@
 
                 console.log('%s : %s', robot_status.name, msg.data);
                 console.log("hi")
-
-
-                if (msg.data == 3) {
-                    console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >문열기 가능</button>`;
+                if (msg.data == 1) {
+                    document.getElementById("robotstatus").innerHTML = "배송 대기중";
                 }
-                else {
-                    document.getElementById("robotstatus").innerHTML = "문열기 불가";
+                else if (msg.data == 2) {
+                    document.getElementById("robotstatus").innerHTML = "배송중";
                     console.log(status)
                 }
+                else if (msg.data == 3) {
+                    document.getElementById("robotstatus").innerHTML = "수령대기중";
+                    console.log(status)
+                }
+                else if (msg.data == 4) {
+                    document.getElementById("robotstatus").innerHTML = "복귀중";
+                    console.log(status)
+                }
+
+
+                talker.unsubscribe();
+
+            });
+            var robotpos = new ROSLIB.Topic({
+                ros: ros,
+                name: '/goalPos',
+                messageType: 'std_msgs/Int32'
+            });
+            robotpos.subscribe(function (msg) {
+
+                console.log('%s : %s', robotpos.name, msg.data);
+                console.log("hi")
+                if (msg.data == 1) {
+                    document.getElementById("robotstatus").innerHTML = "1공학관";
+                }
+                else if (msg.data == 3) {
+                    document.getElementById("robotstatus").innerHTML = "3공학관";
+                    console.log(status)
+                }
+                else if (msg.data == 5) {
+                    document.getElementById("robotstatus").innerHTML = "5공학관";
+                    console.log(status)
+                }
+                else {
+                    document.getElementById("robotstatus").innerHTML = "알수없음";
+                    console.log(status)
+                }
+
 
                 talker.unsubscribe();
 
             });
 
+            var navinfo = new ROSLIB.Topic({
+                ros: ros,
+                name: '/gps',
+                messageType: 'sensor_msgs/NavSatFix'
+            });
 
-            setTimeout("history.go(0);", 4000);
+
+            navinfo.subscribe(function (msg) {
+
+                console.log('%s : %s', navinfo.name, msg.latitude);
+                robotposition[0] = msg.latitude
+                robotposition[1] = msg.longitude
+                var status = msg.data
+                console.log(robotposition)
+
+
+                navinfo.unsubscribe();
+
+            });
+
+
+            setTimeout("history.go(0);", 2000);
 
         }
+
         function opendoor() {
             var ros = new ROSLIB.Ros({
                 url: 'ws://192.168.43.250:9090'

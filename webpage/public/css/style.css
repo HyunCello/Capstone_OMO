@@ -83,7 +83,7 @@ main {
   margin-right: 1.4%;
   align-items: center;
   font-size: 1.4em;
-  width: 40%;
+  width: 60%;
   height: 7%;
   text-align: center;
   display: inline-table;
@@ -105,10 +105,13 @@ main {
   font-size: 1.4em;
   width: 29%;
   height: 7%;
-  background: rgba(51, 73, 88, 0.2);
   text-align: center;
   display: inline-table;
   vertical-align: middle;
+  border-radius: 30px;
+  border: 2px solid rgba(244, 156, 2, 0.1);
+  box-sizing: border-box;
+  box-shadow: -0.2em -0.2em 0.2em 0.2em rgba(255, 210, 0, 0.3) inset;
 }
 .verticalblock {
   padding-top: 6%;

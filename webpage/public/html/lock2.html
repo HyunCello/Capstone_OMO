@@ -6,27 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-
-
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 
     <script src="../js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
     <title>잠금</title>
-
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
+
+    <script type="text/javascript" src="../js/menu.js"></script>
 
 
 
@@ -34,33 +24,208 @@
 
 <body>
 
+    <style>
+        .btn_mylct {
+            z-index: 100;
+            overflow: hidden;
+            display: inline-block;
+            position: absolute;
+            top: 7px;
+            left: 5px;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(58, 70, 88, .45);
+            border-radius: 2px;
+            background: #fcfcfd;
+            text-align: center;
+            -webkit-background-clip: padding;
+            background-clip: padding-box
+        }
+
+        .spr_trff {
+            overflow: hidden;
+            display: inline-block;
+            color: transparent !important;
+            vertical-align: top;
+            background: url(https://ssl.pstatic.net/static/maps/m/spr_trff_v6.png) 0 0;
+            background-size: 200px 200px;
+            -webkit-background-size: 200px 200px
+        }
+
+        .spr_ico_mylct {
+            width: 20px;
+            height: 20px;
+            margin: 7px 0 0 0;
+            background-position: -153px -31px
+        }
+    </style>
 
     <div class="mainblock">
 
-        잠금
+
+        배송 가능한지 확인
 
     </div>
 
-    <div class="subblock">
-
-        잠금 해제하기
+    <div id="modal">
+        <div class="modal_content">
+            <h2>배달 보내기를 <br>성공하였습니다!</h2>
+            <p id="modal_close_btn">창 닫기</p>
+        </div>
+        <div class="modal_layer"></div>
 
     </div>
-    <div class="buttonblock" id="robotstatus">
+    <!-- 모달 쓰고싶으면 modalopen()-->
+
+    <div class="subblock" style="height: 40%;padding-top: 5em;">
+
+        물품 적재하기
+
+    </div>
+    <div class="buttonblock" style="height: 40%;padding-top: 5em;" id="robotstatus">
 
         상태불명
 
     </div>
-    <div class="subblock" id="goback">
+
+
+    <div class="mainblock" id="goback">
 
         뒤로 가기
 
     </div>
 
+    <script type="text/javascript" type="text/javascript">
+        // Connecting to ROS
+        // -----------------
+        publish();
+        function publish() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
 
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+
+            var talker = new ROSLIB.Topic({
+                ros: ros,
+                name: '/lock',
+                messageType: 'std_msgs/Int32'
+            });
+            talker.subscribe(function (msg) {
+
+                console.log('%s : %s', talker.name, msg.data);
+                var status = msg.data
+                console.log("hi")
+                talker.unsubscribe();
+
+            });
+
+
+            var robot_status = new ROSLIB.Topic({
+                ros: ros,
+                name: '/robotStatus',
+                messageType: 'std_msgs/Int32'
+            });
+            robot_status.subscribe(function (msg) {
+
+                console.log('%s : %s', robot_status.name, msg.data);
+                console.log("hi")
+
+
+
+                if (msg.data == 1) {
+                    console.log(document.location.href.split('?')[1])
+                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >물품적재 가능</button>`;
+                }
+                else {
+                    document.getElementById("robotstatus").innerHTML = "물품적재 불가";
+                    console.log(status)
+                }
+
+                talker.unsubscribe();
+
+            });
+
+
+            setTimeout("history.go(0);", 10000);
+
+        }
+        function opendoor() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var opendoor = new ROSLIB.Topic({
+                ros: ros,
+                name: '/doorstatus',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var open = new ROSLIB.Message({
+                data: 1
+            });
+            console.log("Publishing cmd_vel");
+            opendoor.publish(open);
+        }
+        function closedoor() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+
+            var opendoor = new ROSLIB.Topic({
+                ros: ros,
+                name: '/doorstatus',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var open = new ROSLIB.Message({
+                data: 2
+            });
+            console.log("Publishing cmd_vel");
+            opendoor.publish(open);
+        }
+        console.log(window.location.href)
+        var str = window.location.href
+        var dbname = str.substr(str.indexOf("?") + 1)
+
+    </script>
 
 
 </body>
+
 
 <script type="text/javascript" src="../js/function.js"></script>
 

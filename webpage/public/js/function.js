@@ -36,7 +36,12 @@ $(document).ready(function () {
     setInterval(500);
     location.href = "orderer.html";
   });
-
+  $("#gotoseller2").on("click", function () {
+    setTimeout(function () {
+      console.log("sda");
+      location.href = "seller.html";
+    }, 150);
+  });
   $("#gotoorder").on("click", function () {
     setTimeout(function () {
       location.href = "order.html";
@@ -45,9 +50,16 @@ $(document).ready(function () {
   $("#gotoorderlist").on("click", function () {
     location.href = "orderlist.html";
   });
-
+  $("#gotorobotstatus").on("click", function () {
+    setTimeout(function () {
+      location.href = "robotstatus.html";
+    }, 150);
+  });
   $("#gotomap_robot").on("click", function () {
     location.href = "robotmap.html";
+  });
+  $("#gotomap_robot2").on("click", function () {
+    location.href = "robotmaps.html";
   });
   $("#gotopassword").on("click", function () {
     location.href = "password.html";
@@ -73,5 +85,5 @@ function modalopen() {
 
 document.getElementById("modal_close_btn").onclick = function () {
   document.getElementById("modal").style.display = "none";
-  location.href = "orderer.html";
+  location.href = "../index.html";
 };

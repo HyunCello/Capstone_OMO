@@ -32,22 +32,28 @@
     </div>
 
 
-    <div class="subblock" style="height: 40%;padding-top: 4.7em;">
+    <div class="subblock">
 
-        문 열기
-        <br>
-        달수 앞에 서주세요
+        잠금 해제하기
 
     </div>
-    <div class="buttonblock" style="height: 40%;padding-top: 5em;" id="robotstatus">
+    <div class="buttonblock" id="robotstatus">
 
         상태불명
 
     </div>
+    <div class="subblock">
+
+        그냥 잠금 해제
+    </div>
+    <div class="buttonblock" onclick="deletemenu(dbname)">
+
+        문 열기
+
+    </div>
 
 
-
-    <div class="mainblock" id="gotoorderer2">
+    <div class="mainblock" id="goback">
 
         뒤로 가기
 
@@ -98,14 +104,22 @@
 
                 console.log('%s : %s', robot_status.name, msg.data);
                 console.log("hi")
-
-
-                if (msg.data == 3) {
+                if (msg.data == 1) {
                     console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >문열기 가능</button>`;
+                    document.getElementById("robotstatus1").innerHTML = `<div onclick="opendoor()">잠금해제 가능 </div>`;
                 }
                 else {
-                    document.getElementById("robotstatus").innerHTML = "문열기 불가";
+                    document.getElementById("robotstatus1").innerHTML = "잠금해제 불가";
+                    console.log(status)
+                }
+
+
+                if (msg.data == 1) {
+                    console.log(document.location.href.split('?')[1])
+                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >잠금해제 가능</button>`;
+                }
+                else {
+                    document.getElementById("robotstatus").innerHTML = "잠금해제 불가";
                     console.log(status)
                 }
 
@@ -114,7 +128,7 @@
             });
 
 
-            setTimeout("history.go(0);", 4000);
+            setTimeout("history.go(0);", 10000);
 
         }
         function opendoor() {

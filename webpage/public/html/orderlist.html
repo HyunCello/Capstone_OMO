@@ -62,7 +62,7 @@
                 div3.className = "subblock"
                 div3.innerHTML = data.val().location + "공"
                 div2.className = "buttonblock"
-                div2.innerHTML = `<div onclick="location.href='lock.html?${data.key}'">주문처리</div>`;
+                div2.innerHTML = `<div onclick="location.href='lock2.html?${data.key}'">주문확인</div>`;
                 document.getElementById('field').appendChild(div);
                 document.getElementById('field').appendChild(div2);
                 console.log("creatediv")
@@ -81,7 +81,7 @@
     <script type="text/javascript">
         function bb(menu) {
             name = menu
-            location.href = "lock.html?" + name + ":"
+            location.href = "lock2.html?" + name + ":"
         }
 
     </script>

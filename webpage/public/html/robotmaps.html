@@ -7,10 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>배달 가능 구역</title>
+    <title>로봇 위치</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
-
+    <script src="../js/menu.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/eventemitter2@6.3.1/lib/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/roslibjs/1.0.1/roslib.min.js"></script>
 
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1bn280ccul"></script>
@@ -53,21 +56,75 @@
             background-position: -153px -31px
         }
     </style>
+
     <div class="mainblock" style="margin-top: 3%;">
 
-        지도볼래요
+        로봇은 어디있을까?
 
     </div>
     <div id="map" style="width:92%;height:69.4%;margin-left: auto;margin-right: auto;border-radius: 30px;">
     </div>
 
-    <div class="mainblock" id="gotoindex">
+    <div class="mainblock" id="gotoseller2">
 
         뒤로 가기
 
     </div>
 
     <script>
+        var robotposition = [37.29705, 126.836670]
+
+
+        publish();
+
+
+        function publish() {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+
+            var navinfo = new ROSLIB.Topic({
+                ros: ros,
+                name: '/gps',
+                messageType: 'sensor_msgs/NavSatFix'
+            });
+            navinfo.subscribe(function (msg) {
+
+                console.log('%s : %s', navinfo.name, msg.latitude);
+                robotposition[0] = msg.latitude
+                robotposition[1] = msg.longitude
+                var status = msg.data
+                console.log(robotposition)
+
+                var position_robot = new naver.maps.LatLng(robotposition[0], robotposition[1]);
+                var robot = { // 하수도
+                    position: position_robot,
+                    map: map,
+                    icon: {
+                        url: '../images/dalsu.png',
+                    }
+                };
+                var marker = new naver.maps.Marker(robot);
+
+                navinfo.unsubscribe();
+
+            });
+
+
+
+        }
         var zoomsize
 
         if (window.innerWidth < 700) {
@@ -80,22 +137,12 @@
             center: new naver.maps.LatLng(37.29729, 126.836795),
             zoom: zoomsize
         });
+
         var marker1 = new naver.maps.Marker({ // 1공3공 사이
             position: new naver.maps.LatLng(37.297567, 126.836710),
             map: map
         });
-        var circle1 = new naver.maps.Circle({
-            strokeColor: '#0000ff',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#0000ff',
-            fillOpacity: 0.35,
-            center: new naver.maps.LatLng(37.297567, 126.836710),
-            radius: 5,
-            zIndex: 100,
-            clickable: true,
-            map: map
-        });
+
         /*
         var marker = new naver.maps.Marker({ // 1공 교차로내부
             position: new naver.maps.LatLng(37.297430, 126.836800),
@@ -117,34 +164,12 @@
             position: new naver.maps.LatLng(37.297200, 126.836260),
             map: map
         });
-        var circle2 = new naver.maps.Circle({
-            strokeColor: '#0000ff',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#0000ff',
-            fillOpacity: 0.35,
-            center: new naver.maps.LatLng(37.297200, 126.836260),
-            radius: 5,
-            zIndex: 100,
-            clickable: true,
-            map: map
-        });
+
         var marker3 = new naver.maps.Marker({ // 5공뒷편
             position: new naver.maps.LatLng(37.2968655, 126.8368147),
             map: map
         });
-        var circle3 = new naver.maps.Circle({
-            strokeColor: '#0000ff',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#0000ff',
-            fillOpacity: 0.35,
-            center: new naver.maps.LatLng(37.2968655, 126.8368147),
-            radius: 5,
-            zIndex: 100,
-            clickable: true,
-            map: map
-        });
+
         /*
         var marker = new naver.maps.Marker({ // 5공 1공사이
             position: new naver.maps.LatLng(37.2969604,126.8370333),
@@ -162,7 +187,9 @@
                 url: '../images/home.png',
             }
         };
+
         var marker = new naver.maps.Marker(homemarker);
+
 
         var polyline1 = new naver.maps.Polyline({
             map: map,
@@ -212,106 +239,8 @@
         });
         //////////////////////////////////////////////////////////////////
 
-        var onegongthreegong = [
-            '<div class="iw_inner" >',
-            '   <h3>1공과 3공 사이</h3>',
-            '</div>'
-        ].join('');
 
-        var onegong = new naver.maps.InfoWindow({
-            content: onegongthreegong
-        });
-
-        var bythethreegong = [
-            '<div class="iw_inner">',
-            '   <h3>   3공   </h3>',
-            '</div>'
-        ].join('');
-
-        var threegong = new naver.maps.InfoWindow({
-            content: bythethreegong
-        });
-
-        var bythefivegong = [
-            '<div class="iw_inner">',
-            '   <h3>   5공   </h3>',
-            '</div>'
-        ].join('');
-
-        var fivegong = new naver.maps.InfoWindow({
-            content: bythefivegong
-        });
-
-
-
-
-
-
-        ////////////////////////포인터 설정////////////////////////////////////
-
-
-        naver.maps.Event.addListener(circle1, "mouseover", function (e) {
-            map.setCursor("pointer");
-            if (onegong.getMap()) {
-            } else {
-                onegong.open(map, marker1);
-            }
-            circle1.setOptions({
-                fillOpacity: 0.8
-            });
-
-        });
-
-        naver.maps.Event.addListener(circle1, "mouseout", function (e) {
-            map.setCursor("auto");
-            onegong.close();
-
-            circle1.setOptions({
-                fillOpacity: 0.35
-            });
-        });
-        /////////////////////////////////////
-        naver.maps.Event.addListener(circle2, "mouseover", function (e) {
-            map.setCursor("pointer");
-            if (threegong.getMap()) {
-            } else {
-                threegong.open(map, marker2);
-            }
-            circle2.setOptions({
-                fillOpacity: 0.8
-            });
-        });
-
-        naver.maps.Event.addListener(circle2, "mouseout", function (e) {
-            map.setCursor("auto");
-            threegong.close();
-            circle2.setOptions({
-                fillOpacity: 0.35
-            });
-        });
-        ///////////////////////////////////////////////////
-        naver.maps.Event.addListener(circle3, "mouseover", function (e) {
-            map.setCursor("pointer");
-            if (fivegong.getMap()) {
-            } else {
-                fivegong.open(map, marker3);
-            }
-            circle3.setOptions({
-                fillOpacity: 0.8
-            });
-        });
-
-        naver.maps.Event.addListener(circle3, "mouseout", function (e) {
-            map.setCursor("auto");
-            fivegong.close();
-            circle3.setOptions({
-                fillOpacity: 0.35
-            });
-        });
-
-
-        /////////////////////////////////////////////////////////////
-        console.log(name)
+        setTimeout("history.go(0);", 2000);
     </script>
 
 </body>
