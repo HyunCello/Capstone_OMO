@@ -97,7 +97,7 @@
 
             var navinfo = new ROSLIB.Topic({
                 ros: ros,
-                name: '/gps',
+                name: '/fix',
                 messageType: 'sensor_msgs/NavSatFix'
             });
             navinfo.subscribe(function (msg) {
