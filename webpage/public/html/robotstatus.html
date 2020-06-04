@@ -25,39 +25,39 @@
 <body>
 
 
-    <div class="mainblock">
+    <div class="mainblock" style="margin-top: 3%;">
 
         어떤 상태일까
 
     </div>
 
 
-    <div class="subblock">
+    <div class="subblock" style="height: 22%; padding-top: 2.6em;">
 
         현재 로봇의 상태
 
     </div>
-    <div class="buttonblock" id="robotstatus">
+    <div class="buttonblock" id="robotstatus" style="height: 22%; padding-top: 2.6em;">
 
         상태불명
 
     </div>
-    <div class="subblock">
+    <div class="subblock" style="height: 22%; padding-top: 2.6em;">
 
         마지막 목표 지점
 
     </div>
-    <div class="buttonblock" id="robotgoal">
+    <div class="buttonblock" id="robotgoal" style="height: 22%; padding-top: 2.6em;">
 
         상태불명
 
     </div>
-    <div class="subblock">
+    <div class="subblock" style="height: 22%; padding-top: 2.6em;">
 
         GPS 수신 여부
 
     </div>
-    <div class="buttonblock" id="robotgps">
+    <div class="buttonblock" id="robotgps" style="height: 22%; padding-top: 2.6em;">
 
         상태불명
 
@@ -145,18 +145,18 @@
                 console.log('%s : %s', robotpos.name, msg.data);
                 console.log("hi")
                 if (msg.data == 1) {
-                    document.getElementById("robotstatus").innerHTML = "1공학관";
+                    document.getElementById("robotgoal").innerHTML = "1공학관";
                 }
                 else if (msg.data == 3) {
-                    document.getElementById("robotstatus").innerHTML = "3공학관";
+                    document.getElementById("robotgoal").innerHTML = "3공학관";
                     console.log(status)
                 }
                 else if (msg.data == 5) {
-                    document.getElementById("robotstatus").innerHTML = "5공학관";
+                    document.getElementById("robotgoal").innerHTML = "5공학관";
                     console.log(status)
                 }
                 else {
-                    document.getElementById("robotstatus").innerHTML = "알수없음";
+                    document.getElementById("robotgoal").innerHTML = "알수없음";
                     console.log(status)
                 }
 
@@ -175,10 +175,14 @@
             navinfo.subscribe(function (msg) {
 
                 console.log('%s : %s', navinfo.name, msg.latitude);
-                robotposition[0] = msg.latitude
-                robotposition[1] = msg.longitude
-                var status = msg.data
-                console.log(robotposition)
+
+                if (msg.latitude != 0) {
+                    document.getElementById("robotgps").innerHTML = "수신됨";
+                }
+                else {
+                    document.getElementById("robotgps").innerHTML = "수산되지않음";
+                    console.log(status)
+                }
 
 
                 navinfo.unsubscribe();

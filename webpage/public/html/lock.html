@@ -25,7 +25,7 @@
 <body>
 
 
-    <div class="mainblock">
+    <div class="mainblock" style="margin-top: 3%;">
 
         문 열어볼까
 
@@ -98,21 +98,37 @@
 
                 console.log('%s : %s', robot_status.name, msg.data);
                 console.log("hi")
+                data1 = msg.data
 
 
-                if (msg.data == 3) {
-                    console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >문열기 가능</button>`;
-                }
-                else {
-                    document.getElementById("robotstatus").innerHTML = "문열기 불가";
-                    console.log(status)
-                }
 
                 talker.unsubscribe();
 
             });
 
+            var robot_camera = new ROSLIB.Topic({
+                ros: ros,
+                name: '/personDetected',
+                messageType: 'std_msgs/Int32'
+            });
+            robot_status.subscribe(function (msg) {
+
+                console.log('%s : %s', robot_status.name, msg.data);
+                console.log("hi")
+
+                data2 = msg.data
+
+                talker.unsubscribe();
+
+            });
+            if (data1 == 3 && data2 == 1) {
+                console.log(document.location.href.split('?')[1])
+                document.getElementById("robotstatus").innerHTML = `<button onclick='opendoor()' >문열기 가능</button>`;
+            }
+            else {
+                document.getElementById("robotstatus").innerHTML = "문열기 불가";
+                console.log(status)
+            }
 
             setTimeout("history.go(0);", 4000);
 

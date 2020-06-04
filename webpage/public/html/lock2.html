@@ -60,7 +60,7 @@
         }
     </style>
 
-    <div class="mainblock">
+    <div class="mainblock" style="margin-top: 3%;">
 
 
         배송 가능한지 확인
@@ -145,7 +145,7 @@
 
                 if (msg.data == 1) {
                     console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='deletemenu("${document.location.href.split('?')[1]}")' >물품적재 가능</button>`;
+                    document.getElementById("robotstatus").innerHTML = `<button onclick='goalpos(loc)' >물품적재 가능</button>`;
                 }
                 else {
                     document.getElementById("robotstatus").innerHTML = "물품적재 불가";
@@ -159,6 +159,36 @@
 
             setTimeout("history.go(0);", 10000);
 
+        }
+        function goalpos(n) {
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var position = new ROSLIB.Topic({
+                ros: ros,
+                name: '/goalPos',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var pos = new ROSLIB.Message({
+                data: n
+            });
+            console.log("Publishing goalpos");
+            opendoor()
+            position.publish(pos);
+            deletemenu(dbname);
         }
         function opendoor() {
             var ros = new ROSLIB.Ros({
@@ -219,7 +249,10 @@
         }
         console.log(window.location.href)
         var str = window.location.href
-        var dbname = str.substr(str.indexOf("?") + 1)
+        var dbname = str.substr(str.indexOf("?") + 1, 20)
+        var loc = str.substr(str.indexOf("%") + 1)
+        console.log(dbname)
+        console.log(loc)
 
     </script>
 

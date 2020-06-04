@@ -17,7 +17,7 @@
 
 <body>
 
-    <div class="mainblock">
+    <div class="mainblock" style="margin-top: 3%;">
 
         주문 목록
 
@@ -61,8 +61,9 @@
                 div.innerHTML = data.val().name + "   /   " + data.val().location + "공"
                 div3.className = "subblock"
                 div3.innerHTML = data.val().location + "공"
+                robotlocation = data.val().location
                 div2.className = "buttonblock"
-                div2.innerHTML = `<div onclick="location.href='lock2.html?${data.key}'">주문확인</div>`;
+                div2.innerHTML = `<div onclick="location.href='lock2.html?${data.key}%${data.val().location}'">주문확인</div>`;
                 document.getElementById('field').appendChild(div);
                 document.getElementById('field').appendChild(div2);
                 console.log("creatediv")
