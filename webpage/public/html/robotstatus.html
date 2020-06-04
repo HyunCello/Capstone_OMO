@@ -137,7 +137,7 @@
             });
             var robotpos = new ROSLIB.Topic({
                 ros: ros,
-                name: '/goalPos',
+                name: '/goalPosPrev',
                 messageType: 'std_msgs/Int32'
             });
             robotpos.subscribe(function (msg) {
