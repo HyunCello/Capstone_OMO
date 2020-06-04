@@ -7,8 +7,8 @@
   <!-- Main Code -->
   <node pkg="omoros" type="dalsu_main.py" name="dalsu_main"/>
   
-  <!-- Launch person_detector 
-  <include file="$(find object_detection)/launch/person_detect.launch" /> -->
+  <!-- Launch person_detector -->
+  <include file="$(find object_detection)/launch/person_detect.launch" /> 
 
   <!-- Launch web rosbridge server --> 
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" /> 
