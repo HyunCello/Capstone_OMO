@@ -166,6 +166,10 @@
                     console.log("문여는상태")
                     document.getElementById("robotstatus").innerHTML = `<div onclick='opendoor()' >문열기 가능</div>`;
                 }
+                else if (data1 == 3 && data2 != 1) {
+                    console.log("문여는상태")
+                    document.getElementById("robotstatus").innerHTML = `<div onclick='opendoor()' >사람인식 안됨</div>`;
+                }
                 else {
                     document.getElementById("robotstatus").innerHTML = "문열기 불가";
                     console.log(status)
@@ -204,8 +208,9 @@
                 data: 1
             });
             console.log("Publishing cmd_vel");
-            modalopen()
             opendoor.publish(open);
+            modalopen()
+
         }
         function closedoor() {
             var ros = new ROSLIB.Ros({
