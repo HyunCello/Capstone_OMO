@@ -97,7 +97,7 @@
 
             var navinfo = new ROSLIB.Topic({
                 ros: ros,
-                name: '/gps',
+                name: '/fix',
                 messageType: 'sensor_msgs/NavSatFix'
             });
             navinfo.subscribe(function (msg) {
@@ -240,7 +240,7 @@
         //////////////////////////////////////////////////////////////////
 
 
-        setTimeout("history.go(0);", 2000);
+        setTimeout("history.go(0);", 5000);
     </script>
 
 </body>

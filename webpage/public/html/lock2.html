@@ -66,7 +66,6 @@
         배송 가능한지 확인
 
     </div>
-
     <div id="modal">
         <div class="modal_content">
             <h2>배달 보내기를 <br>성공하였습니다!</h2>
@@ -87,7 +86,6 @@
         상태불명
 
     </div>
-
 
 
     <div class="mainblock" id="goback">
@@ -227,6 +225,7 @@
             console.log("Publishing goalpos");
 
             position.publish(pos);
+
             opendoor()
             deletemenu(dbname);
             modalopen()
@@ -249,14 +248,14 @@
             });
             var opendoor = new ROSLIB.Topic({
                 ros: ros,
-                name: '/doorstatus',
+                name: '/doorStatus',
                 messageType: 'std_msgs/Int32'
             });
 
             var open = new ROSLIB.Message({
                 data: 1
             });
-            console.log("Publishing cmd_vel");
+            console.log("Publishing door status");
             opendoor.publish(open);
         }
         function closedoor() {
@@ -278,7 +277,7 @@
 
             var opendoor = new ROSLIB.Topic({
                 ros: ros,
-                name: '/doorstatus',
+                name: '/doorStatus',
                 messageType: 'std_msgs/Int32'
             });
 
