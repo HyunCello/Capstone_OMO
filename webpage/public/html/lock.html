@@ -23,7 +23,41 @@
 </head>
 
 <body>
+    <style>
+        .btn_mylct {
+            z-index: 100;
+            overflow: hidden;
+            display: inline-block;
+            position: absolute;
+            top: 7px;
+            left: 5px;
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(58, 70, 88, .45);
+            border-radius: 2px;
+            background: #fcfcfd;
+            text-align: center;
+            -webkit-background-clip: padding;
+            background-clip: padding-box
+        }
 
+        .spr_trff {
+            overflow: hidden;
+            display: inline-block;
+            color: transparent !important;
+            vertical-align: top;
+            background: url(https://ssl.pstatic.net/static/maps/m/spr_trff_v6.png) 0 0;
+            background-size: 200px 200px;
+            -webkit-background-size: 200px 200px
+        }
+
+        .spr_ico_mylct {
+            width: 20px;
+            height: 20px;
+            margin: 7px 0 0 0;
+            background-position: -153px -31px
+        }
+    </style>
 
     <div class="mainblock" style="margin-top: 3%;">
 
@@ -31,7 +65,14 @@
 
     </div>
 
+    <div id="modal">
+        <div class="modal_content">
+            <h2>달수의 문이<br>열렸습니다</h2>
+            <p id="modal_close_btn">창 닫기</p>
+        </div>
+        <div class="modal_layer"></div>
 
+    </div>
     <div class="subblock" style="height: 40%;padding-top: 4.7em;">
 
         문 열기
@@ -56,6 +97,8 @@
     <script type="text/javascript" type="text/javascript">
         // Connecting to ROS
         // -----------------
+        var data1
+        var data2
         publish();
         function publish() {
             var ros = new ROSLIB.Ros({
@@ -111,26 +154,28 @@
                 name: '/personDetected',
                 messageType: 'std_msgs/Int32'
             });
-            robot_status.subscribe(function (msg) {
+            robot_camera.subscribe(function (msg) {
 
-                console.log('%s : %s', robot_status.name, msg.data);
+                console.log('%s : %s', robot_camera.name, msg.data);
                 console.log("hi")
 
                 data2 = msg.data
 
+                console.log(data1)
+                if (data1 == 3 && data2 == 1) {
+                    console.log("문여는상태")
+                    document.getElementById("robotstatus").innerHTML = `<div onclick='opendoor()' >문열기 가능</div>`;
+                }
+                else {
+                    document.getElementById("robotstatus").innerHTML = "문열기 불가";
+                    console.log(status)
+                }
                 talker.unsubscribe();
 
             });
-            if (data1 == 3 && data2 == 1) {
-                console.log(document.location.href.split('?')[1])
-                document.getElementById("robotstatus").innerHTML = `<button onclick='opendoor()' >문열기 가능</button>`;
-            }
-            else {
-                document.getElementById("robotstatus").innerHTML = "문열기 불가";
-                console.log(status)
-            }
 
-            setTimeout("history.go(0);", 4000);
+
+            setTimeout("history.go(0);", 5000);
 
         }
         function opendoor() {
@@ -151,7 +196,7 @@
             });
             var opendoor = new ROSLIB.Topic({
                 ros: ros,
-                name: '/doorstatus',
+                name: '/doorStatus',
                 messageType: 'std_msgs/Int32'
             });
 
@@ -159,6 +204,7 @@
                 data: 1
             });
             console.log("Publishing cmd_vel");
+            modalopen()
             opendoor.publish(open);
         }
         function closedoor() {

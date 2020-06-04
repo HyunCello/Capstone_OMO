@@ -143,7 +143,7 @@
             robotpos.subscribe(function (msg) {
 
                 console.log('%s : %s', robotpos.name, msg.data);
-                console.log("hi")
+                console.log("hello")
                 if (msg.data == 1) {
                     document.getElementById("robotgoal").innerHTML = "1공학관";
                 }
@@ -190,7 +190,7 @@
             });
 
 
-            setTimeout("history.go(0);", 2000);
+            setTimeout("history.go(0);", 7000);
 
         }
 

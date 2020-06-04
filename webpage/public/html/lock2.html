@@ -89,6 +89,7 @@
     </div>
 
 
+
     <div class="mainblock" id="goback">
 
         뒤로 가기
@@ -98,6 +99,13 @@
     <script type="text/javascript" type="text/javascript">
         // Connecting to ROS
         // -----------------
+        console.log(window.location.href)
+        var str = window.location.href
+        var dbname = str.substr(str.indexOf("?") + 1, 20)
+        var loc = str.substr(str.indexOf("%") + 1, 1)
+        console.log(dbname)
+        console.log(loc)
+        loc = Number(loc)
         publish();
         function publish() {
             var ros = new ROSLIB.Ros({
@@ -145,7 +153,7 @@
 
                 if (msg.data == 1) {
                     console.log(document.location.href.split('?')[1])
-                    document.getElementById("robotstatus").innerHTML = `<button onclick='goalpos(loc)' >물품적재 가능</button>`;
+                    document.getElementById("robotstatus").innerHTML = `<div onclick='goalpos(loc)' >물품적재 가능</div>`;
                 }
                 else {
                     document.getElementById("robotstatus").innerHTML = "물품적재 불가";
@@ -157,7 +165,38 @@
             });
 
 
-            setTimeout("history.go(0);", 10000);
+
+
+        }
+        function robot_pos(status) {
+            console.log("왜!!!!!!!!!!")
+            var ros = new ROSLIB.Ros({
+                url: 'ws://192.168.43.250:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+            var robot = new ROSLIB.Topic({
+                ros: ros,
+                name: '/goalPos',
+                messageType: 'std_msgs/Int32'
+            });
+
+            var message_status = new ROSLIB.Message({
+                data: status
+            });
+            robot.publish(message_status);
+            console.log("Publishing goalposition");
+            console.log(status)
 
         }
         function goalpos(n) {
@@ -186,9 +225,11 @@
                 data: n
             });
             console.log("Publishing goalpos");
-            opendoor()
+
             position.publish(pos);
+            opendoor()
             deletemenu(dbname);
+            modalopen()
         }
         function opendoor() {
             var ros = new ROSLIB.Ros({
@@ -247,13 +288,9 @@
             console.log("Publishing cmd_vel");
             opendoor.publish(open);
         }
-        console.log(window.location.href)
-        var str = window.location.href
-        var dbname = str.substr(str.indexOf("?") + 1, 20)
-        var loc = str.substr(str.indexOf("%") + 1)
-        console.log(dbname)
-        console.log(loc)
 
+
+        setTimeout("history.go(0);", 10000);
     </script>
 
 
