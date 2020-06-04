@@ -206,14 +206,24 @@ class StatePublisher():
         self.stat_pub.publish(self.msg)
         rospy.loginfo('state :  ' + str(stat) + ' published. ')
 
-        if stat == 1:
-            rospy.loginfo('wait for delivery... ')
-        if stat == 2:
-            rospy.loginfo('in delivery... ')
-        if stat == 3:
-            rospy.loginfo('arrived at goal and waiting... ')
-        if stat == 4:
-            rospy.loginfo('in return... ')
+        # if stat == 1:
+        #     rospy.loginfo('wait for delivery... ')
+        # if stat == 2:
+        #     rospy.loginfo('in delivery... ')
+        # if stat == 3:
+        #     rospy.loginfo('arrived at goal and waiting... ')
+        # if stat == 4:
+        #     rospy.loginfo('in return... ')
+
+
+class GoalPosPublisher():
+    def __init__(self):
+        self.pos_pub = rospy.Publisher("goalPosPrev", Int32, queue_size=1)
+        self.msg = Int32()
+
+    def send_pos(self, pos):
+        self.msg.data = pos
+        self.pos_pub.publish(self.msg)
 
 
 class GoalPosSubscriber():
@@ -271,6 +281,7 @@ def dalsu_main():
     rospy.init_node("dalsu_main", anonymous=False)
     goal_pub = GoalPublisher()
     stat_pub = StatePublisher()
+    pos_pub = GoalPosPublisher()
     pos_sub = GoalPosSubscriber()
     door_sub = DoorStatusSubscriber()
     result_sub = ResultSubscriber()
@@ -283,112 +294,113 @@ def dalsu_main():
     rospy.loginfo("Dalsu_main Started")
     status = 1
 
-    def dalsu_sleep(status):
+    def dalsu_sleep(status, pos):
         stat_pub.send_stat(status)
+        pos_pub.send_pos(pos)
         rate.sleep()
 
-    def wait_moving(status):
+    def wait_moving(status, pos):
         while result_sub.wait_result() is False:
-            dalsu_sleep(status)
+            dalsu_sleep(status, pos)
 
-    def wait_closeDoor(status):
+    def wait_closeDoor(status, pos):
         while door_sub.wait_door() is False:
-            dalsu_sleep(status)
+            dalsu_sleep(status, pos)
 
     while not rospy.is_shutdown():
         goal_pos = pos_sub.wait_pos()
 
         ########## Move to Goal ##########
         if goal_pos is None:
-            dalsu_sleep(status)
+            dalsu_sleep(status, 0)
             continue
         
         elif goal_pos == 0:  # GoToHome_test (Emergency Return)
             status = 4
             goal_pub.send_goal(9999)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             status = 1
             rospy.loginfo('Arrived at Home')
 
         elif goal_pos == 1:  # 1st_Engineering
             status = 2
-            wait_closeDoor(status)
+            wait_closeDoor(status, goal_pos)
             goal_pub.send_goal(0)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(1)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(2)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(3)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             rospy.loginfo('Arrived at Goal ' + str(goal_pos))
             status = 3
-            wait_closeDoor(status)
+            wait_closeDoor(status, goal_pos)
             status = 4
             goal_pub.send_goal(10)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(11)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(12)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(13)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(9999)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             status = 1
             rospy.loginfo('Arrived at Home')
 
         elif goal_pos == 3:  # 3rd_Engineering
             status = 2
-            wait_closeDoor(status)
+            wait_closeDoor(status, goal_pos)
             goal_pub.send_goal(20)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(21)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(22)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(23)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(24)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             rospy.loginfo('Arrived at Goal ' + str(goal_pos))
             status = 3
-            wait_closeDoor(status)
+            wait_closeDoor(status, goal_pos)
             status = 4
             goal_pub.send_goal(30)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(31)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(32)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(33)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(34)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(9999)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             status = 1
             rospy.loginfo('Arrived at Home')
         
         elif goal_pos == 5:  # 5th_Engineering
             status = 2
-            wait_closeDoor(status)
+            wait_closeDoor(status, goal_pos)
             goal_pub.send_goal(40)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(41)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(42)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             rospy.loginfo('Arrived at Goal ' + str(goal_pos))
             status = 3
-            wait_closeDoor(status)
+            wait_closeDoor(status, goal_pos)
             status = 4
             goal_pub.send_goal(50)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(51)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             goal_pub.send_goal(9999)
-            wait_moving(status)
+            wait_moving(status, goal_pos)
             status = 1
             rospy.loginfo('Arrived at Home')
         ########## Arrive at Goal ##########
