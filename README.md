@@ -13,19 +13,29 @@
 # 어떠한 것이 문제였는가
 
 ![img](images/문제1.png)
+첫번째 문제는
+</br>
 
-### 문제1
+</br>
 
 ![img](images/문제2.png)
+두번째 문제는
+</br>
 
-### 문제2
+</br>
 
 ![img](images/문제3.png)
+세번째 문제는
+</br>
 
-### 문제3
+</br>
 
 ![img](images/문제종합.png)
 
 ### 이러한 문제들은 모두 라스트마일~
+
+</br>
+
+</br>
 
 ![img](images/방법_구상.png)
